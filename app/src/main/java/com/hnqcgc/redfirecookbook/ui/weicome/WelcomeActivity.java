@@ -3,7 +3,6 @@ package com.hnqcgc.redfirecookbook.ui.weicome;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
 import com.hnqcgc.redfirecookbook.MainActivity;
 import com.hnqcgc.redfirecookbook.R;
 
@@ -11,6 +10,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    private static final String TAG = "WelcomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,4 +27,5 @@ public class WelcomeActivity extends AppCompatActivity {
         };
         timer.schedule(task, 1500);
     }
+
 }
