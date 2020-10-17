@@ -23,8 +23,8 @@ public class RedFireCookBookNetwork {
         return redFireCookBookNetwork;
     }
 
-    public Call<Recipe> searchAllRecipe(int limit, int offset) {
-        return service.searchAllRecipe(limit, offset);
+    public Call<Recipe> searchAllRecipe(int offset) {
+        return service.searchAllRecipe(10, offset);
     }
 
     public Call<RecipeDetails> searchRecipe(long recipeId) {

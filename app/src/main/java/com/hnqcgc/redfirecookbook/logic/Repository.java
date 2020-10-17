@@ -24,9 +24,9 @@ public class Repository {
         return repository;
     }
 
-    public MutableLiveData<Recipe> searchAllRecipe(int limit, int offset) {
+    public MutableLiveData<Recipe> searchAllRecipe(int offset) {
         MutableLiveData<Recipe> recipeLiveData = new MutableLiveData<>();
-        Call<Recipe> call = RedFireCookBookNetwork.getInstance().searchAllRecipe(limit, offset);
+        Call<Recipe> call = RedFireCookBookNetwork.getInstance().searchAllRecipe(offset);
         call.enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
