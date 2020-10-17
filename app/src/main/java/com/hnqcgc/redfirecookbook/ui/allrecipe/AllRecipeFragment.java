@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hnqcgc.redfirecookbook.R;
 
@@ -19,6 +20,7 @@ public class AllRecipeFragment extends Fragment {
 
     private AllRecipeViewModel viewModel;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Nullable
     @Override
@@ -31,6 +33,7 @@ public class AllRecipeFragment extends Fragment {
 
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.recycleView);
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
     }
 
     @Override
@@ -41,14 +44,23 @@ public class AllRecipeFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         AllRecipeAdapter adapter = new AllRecipeAdapter(getContext(), viewModel.infoList);
         recyclerView.setAdapter(adapter);
-        viewModel.searchAllRecipe(viewModel.length);
+        refreshRecipe();
         viewModel.allRecipe.observe(getViewLifecycleOwner(), recipe -> {
             if (recipe != null) {
+                viewModel.infoList.clear();
                 viewModel.infoList.addAll(0, recipe.getResults());
                 adapter.notifyDataSetChanged();
             }else {
                 Toast.makeText(getContext(), "数据未能获取", Toast.LENGTH_SHORT).show();
             }
+            swipeRefresh.setRefreshing(false);
         });
+        swipeRefresh.setColorSchemeResources(R.color.red_500);
+        swipeRefresh.setOnRefreshListener(this::refreshRecipe);
+    }
+
+    public void refreshRecipe() {
+        viewModel.searchAllRecipe(viewModel.length += 10);
+        swipeRefresh.setRefreshing(true);
     }
 }
