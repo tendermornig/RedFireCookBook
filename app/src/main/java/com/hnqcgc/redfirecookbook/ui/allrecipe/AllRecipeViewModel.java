@@ -19,7 +19,7 @@ public class AllRecipeViewModel extends ViewModel {
 
     public List<RecipeInfo> infoList = new ArrayList<>();
 
-    public int length = new Random().nextInt(36134);
+    public int length;
 
     public LiveData<Recipe> allRecipe = Transformations.switchMap(queryNumberLiveData,
             input -> Repository.getInstance().searchAllRecipe(input));
