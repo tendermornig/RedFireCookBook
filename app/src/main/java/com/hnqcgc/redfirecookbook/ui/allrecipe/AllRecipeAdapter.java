@@ -77,6 +77,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     .into(viewHolder.recipeImage);
             viewHolder.titleText.setText(recipeInfo.getTitle());
             if (!"".equals(recipeInfo.getMessage())) {
+                viewHolder.messageText.setVisibility(View.VISIBLE);
                 viewHolder.messageText.setText(recipeInfo.getMessage());
             }else {
                 viewHolder.messageText.setVisibility(View.GONE);
@@ -88,7 +89,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if (holder instanceof BottomRefreshViewHolder) {
-            // 支持瀑布流布局
+            //让底部刷新布局支持瀑布流布局
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
                 ((StaggeredGridLayoutManager.LayoutParams) lp).setFullSpan(true);

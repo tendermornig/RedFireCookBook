@@ -73,11 +73,12 @@ public class AllRecipeFragment extends Fragment {
         viewModel.allRecipe.observe(getViewLifecycleOwner(), recipe -> {
             if (recipe != null) {
                 if (REFRESH_TYPE == 0) {
-                    viewModel.infoList.clear();
+                    viewModel.infoList.addAll(0, recipe.getResults());
                     swipeRefresh.setRefreshing(false);
+                }else {
+                    viewModel.infoList.addAll(recipe.getResults());
                 }
-                viewModel.infoList.addAll(recipe.getResults());
-                adapter.notifyItemRangeChanged(viewModel.infoList.size() - 10, viewModel.infoList.size());
+                adapter.notifyDataSetChanged();
             }else {
                 Toast.makeText(getContext(), "数据未能获取", Toast.LENGTH_SHORT).show();
             }
