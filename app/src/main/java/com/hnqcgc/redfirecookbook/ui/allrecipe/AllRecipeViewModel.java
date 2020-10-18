@@ -11,7 +11,6 @@ import com.hnqcgc.redfirecookbook.logic.model.RecipeInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class AllRecipeViewModel extends ViewModel {
 
@@ -26,6 +25,14 @@ public class AllRecipeViewModel extends ViewModel {
 
     public void searchAllRecipe(int offset) {
         queryNumberLiveData.setValue(offset);
+    }
+
+    public void saveRecipeCount(int count) {
+        Repository.getInstance().saveRecipeCount(count);
+    }
+
+    public int getRecipeCount() {
+        return Repository.getInstance().getRecipeCount();
     }
 
 }

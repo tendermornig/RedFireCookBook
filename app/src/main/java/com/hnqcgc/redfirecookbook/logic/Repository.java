@@ -3,6 +3,7 @@ package com.hnqcgc.redfirecookbook.logic;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.hnqcgc.redfirecookbook.logic.dao.RecipeCountDao;
 import com.hnqcgc.redfirecookbook.logic.model.Recipe;
 import com.hnqcgc.redfirecookbook.logic.model.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
@@ -64,6 +65,14 @@ public class Repository {
             }
         });
         return recipeDetailsLiveData;
+    }
+
+    public void saveRecipeCount(int count) {
+        RecipeCountDao.getInstance().saveRecipeCount(count);
+    }
+
+    public int getRecipeCount() {
+        return RecipeCountDao.getInstance().getRecipeCount();
     }
 
 }

@@ -4,21 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.gson.Gson;
 import com.hnqcgc.redfirecookbook.R;
-import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import java.util.Random;
 
@@ -53,7 +49,10 @@ public class AllRecipeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refreshRecipe();
+
+        if (viewModel.infoList.size() == 0)
+            refreshRecipe();
+
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
@@ -72,12 +71,13 @@ public class AllRecipeFragment extends Fragment {
 
         viewModel.allRecipe.observe(getViewLifecycleOwner(), recipe -> {
             if (recipe != null) {
+                if (recipe.getCount() > viewModel.getRecipeCount())
+                    viewModel.saveRecipeCount(recipe.getCount());
                 if (REFRESH_TYPE == 0) {
                     viewModel.infoList.addAll(0, recipe.getResults());
                     swipeRefresh.setRefreshing(false);
-                }else {
+                }else
                     viewModel.infoList.addAll(recipe.getResults());
-                }
                 adapter.notifyDataSetChanged();
             }else {
                 Toast.makeText(getContext(), "数据未能获取", Toast.LENGTH_SHORT).show();
@@ -90,16 +90,15 @@ public class AllRecipeFragment extends Fragment {
 
     private void refreshRecipe() {
         REFRESH_TYPE = 0;
-        viewModel.length = new Random().nextInt(36134);
+        viewModel.length = new Random().nextInt(viewModel.getRecipeCount());
         viewModel.searchAllRecipe(viewModel.length);
         swipeRefresh.setRefreshing(true);
     }
 
     private int getLastVisibleItemPosition() {
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (manager instanceof StaggeredGridLayoutManager) {
+        if (manager instanceof StaggeredGridLayoutManager)
             return ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(null)[0];
-        }
         return NO_POSITION;
     }
 
