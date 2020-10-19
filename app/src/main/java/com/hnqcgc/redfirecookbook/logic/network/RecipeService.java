@@ -15,6 +15,6 @@ public interface RecipeService {
     Call<Recipe> searchAllRecipe(@Query("limit") int limit, @Query("offset") int offset);
 
     @GET("v1/recipe/{recipeId}")
-    Call<RecipeDetails> searchRecipe(@Path("recipeId") long recipeId);
+    Call<RecipeDetails> searchRecipe(@Path("recipeId") int recipeId);
 
 }

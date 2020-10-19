@@ -46,7 +46,7 @@ public class Repository {
         return recipeLiveData;
     }
 
-    public MutableLiveData<RecipeDetails> searchRecipe(long recipeId) {
+    public MutableLiveData<RecipeDetails> searchRecipe(int recipeId) {
         MutableLiveData<RecipeDetails> recipeDetailsLiveData = new MutableLiveData<>();
         Call<RecipeDetails> call = RedFireCookBookNetwork.getInstance().searchRecipe(recipeId);
         call.enqueue(new Callback<RecipeDetails>() {
