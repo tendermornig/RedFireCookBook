@@ -30,7 +30,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     private static final String TAG = "RecipeActivity";
 
-    public enum State {
+    enum State {
         EXPANDED,
         COLLAPSED,
         IDLE
@@ -42,8 +42,6 @@ public class RecipeActivity extends AppCompatActivity {
 
     private AppBarLayout appBar;
 
-    private CollapsingToolbarLayout collapsingToolbar;
-
     private ImageView recipeImg;
 
     private TextView recipeTitle;
@@ -52,13 +50,13 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        viewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        getRecipeId();
         initView();
         initViewModel();
-        getRecipeId();
     }
 
     private void initViewModel() {
-        viewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         viewModel.recipeDetailsLiveData.observe(this, recipeDetails -> {
             if (recipeDetails != null) {
                 recipeTitle.setText(recipeDetails.getTitle());
@@ -111,9 +109,7 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
         appBar = findViewById(R.id.appBar);
-        collapsingToolbar = findViewById(R.id.collapsingToolbar);
         recipeTitle = findViewById(R.id.recipeTitle);
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
@@ -126,7 +122,6 @@ public class RecipeActivity extends AppCompatActivity {
             supportActionBar.setDisplayShowTitleEnabled(false);
             isDarkTheme(supportActionBar);
         }
-
     }
 
     public static void startRecipeActivity(Context context, int recipeId) {

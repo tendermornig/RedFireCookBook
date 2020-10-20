@@ -33,6 +33,11 @@ public class AllRecipeFragment extends Fragment {
 
     private final int NO_POSITION = -1;
 
+    enum RefreshType{
+        TOP_REFRESH,
+        BOTTOM_REFRESH;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +73,7 @@ public class AllRecipeFragment extends Fragment {
             if (recipe != null) {
                 if (recipe.getCount() > viewModel.getRecipeCount())
                     viewModel.saveRecipeCount(recipe.getCount());
-                if (viewModel.REFRESH_TYPE == 0) {
+                if (viewModel.REFRESH_TYPE == RefreshType.TOP_REFRESH) {
                     viewModel.infoList.addAll(0, recipe.getResults());
                     swipeRefresh.setRefreshing(false);
                 }else
@@ -93,7 +98,7 @@ public class AllRecipeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (isBottomViewVisible()) {
-                    viewModel.REFRESH_TYPE = 1;
+                    viewModel.REFRESH_TYPE = RefreshType.BOTTOM_REFRESH;
                     viewModel.searchAllRecipe(viewModel.length += 10);
                 }
             }
@@ -101,7 +106,7 @@ public class AllRecipeFragment extends Fragment {
     }
 
     private void refreshRecipe() {
-        viewModel.REFRESH_TYPE = 0;
+        viewModel.REFRESH_TYPE = RefreshType.TOP_REFRESH;
         viewModel.length = new Random().nextInt(viewModel.getRecipeCount());
         viewModel.searchAllRecipe(viewModel.length);
         swipeRefresh.setRefreshing(true);
