@@ -38,8 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/recipeTitle"
-                android:textSize="18sp"
-                android:padding="8dp"
+                android:textSize="22sp"
+                android:padding="18dp"
+                android:textStyle="bold"
                 android:layout_gravity="bottom"
                 android:background="@drawable/white_fillet_background"
                 app:layout_collapseMode="pin"/>
@@ -71,16 +72,19 @@
                 android:id="@+id/recipeInfo"
                 android:textSize="18sp"
                 android:text="@string/recipe_info_text"
-                android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"
-                android:layout_marginStart="20dp"
-                android:padding="4dp"/>
+                android:layout_marginStart="18sp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:layout_marginBottom="4dp"/>
 
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:id="@+id/infoListView"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="45dp"
+                android:id="@+id/infoLayout"/>
 
         </LinearLayout>
 

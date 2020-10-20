@@ -12,12 +12,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     private TextView recipeTitle;
 
-    private ListView infoListView;
+    private LinearLayout infoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,16 @@ public class RecipeActivity extends AppCompatActivity {
                 Glide.with(this)
                         .load(recipeDetails.getImg())
                         .into(recipeImg);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(RecipeActivity.this,
-                        android.R.layout.simple_expandable_list_item_1, recipeDetails.getInfo().get(0).asList());
-                infoListView.setAdapter(adapter);
+                List<String> dataList = recipeDetails.getInfo().get(0).asList();
+                infoLayout.removeAllViews();
+                for (String str:
+                     dataList) {
+                    View view = LayoutInflater.from(this).inflate(android.R.layout.test_list_item,
+                            infoLayout, false);
+                    TextView infoText = view.findViewById(android.R.id.text1);
+                    infoText.setText(str);
+                    infoLayout.addView(view);
+                }
             }else {
                 Toast.makeText(this, "数据获取失败", Toast.LENGTH_SHORT).show();
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
@@ -123,7 +131,7 @@ public class RecipeActivity extends AppCompatActivity {
         recipeTitle = findViewById(R.id.recipeTitle);
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
-        infoListView = findViewById(R.id.infoListView);
+        infoLayout = findViewById(R.id.infoLayout);
 
         setSupportActionBar(toolbar);
 

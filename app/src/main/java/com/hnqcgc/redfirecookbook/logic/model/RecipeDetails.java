@@ -118,7 +118,7 @@ public class RecipeDetails {
         }
 
         public String getTime() {
-            return "制作时间" + time;
+            return "制作时间：" + time;
         }
 
         public void setTime(String time) {
