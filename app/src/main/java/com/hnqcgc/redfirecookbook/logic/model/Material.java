@@ -1,7 +1,5 @@
 package com.hnqcgc.redfirecookbook.logic.model;
 
-import java.util.List;
-
 public class Material {
 
     private String name;

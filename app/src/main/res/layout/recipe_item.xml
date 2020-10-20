@@ -47,8 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/messageText"
-            android:padding="3dp"
-            android:layout_marginStart="8dp"
+            android:padding="11dp"
             android:textSize="16sp"/>
 
     </LinearLayout>

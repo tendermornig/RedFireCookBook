@@ -10,7 +10,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:id="@+id/appBar"
         android:fitsSystemWindows="true"
         app:elevation="0dp">
@@ -59,6 +59,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -75,16 +76,40 @@
                 android:textColor="?android:attr/textColorPrimary"
                 android:layout_marginStart="18sp"
                 android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:layout_marginBottom="4dp"/>
+                android:paddingEnd="4dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginTop="8dp"
-                android:layout_marginStart="45dp"
+                android:layout_marginStart="42dp"
                 android:id="@+id/infoLayout"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/foodIngredients"
+                android:textSize="18sp"
+                android:text="@string/food_ingredients"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_marginStart="18sp"
+                android:layout_marginTop="20dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"/>
+
+            <com.hnqcgc.redfirecookbook.ui.recipe.FoodIngredientsListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                android:divider="@drawable/list_item_dash"
+                android:dividerHeight="5dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="8dp"
+                android:id="@+id/foodIngredientsListView"/>
 
         </LinearLayout>
 

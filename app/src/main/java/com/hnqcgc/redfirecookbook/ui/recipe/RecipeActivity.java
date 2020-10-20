@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,19 +14,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import java.util.List;
@@ -54,6 +49,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     private LinearLayout infoLayout;
 
+    private FoodIngredientsListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +69,16 @@ public class RecipeActivity extends AppCompatActivity {
                         .load(recipeDetails.getImg())
                         .into(recipeImg);
                 List<String> dataList = recipeDetails.getInfo().get(0).asList();
-                infoLayout.removeAllViews();
                 for (String str:
                      dataList) {
-                    View view = LayoutInflater.from(this).inflate(android.R.layout.test_list_item,
+                    View view = LayoutInflater.from(this).inflate(R.layout.recipe_info_text,
                             infoLayout, false);
-                    TextView infoText = view.findViewById(android.R.id.text1);
+                    TextView infoText = view.findViewById(R.id.recipeInfoText);
                     infoText.setText(str);
                     infoLayout.addView(view);
                 }
+                FoodIngredientsAdapter adapter = new FoodIngredientsAdapter(this, recipeDetails.getMaterials());
+                listView.setAdapter(adapter);
             }else {
                 Toast.makeText(this, "数据获取失败", Toast.LENGTH_SHORT).show();
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
@@ -98,10 +96,8 @@ public class RecipeActivity extends AppCompatActivity {
         }
     }
 
-    private void isDarkTheme(ActionBar supportActionBar) {
-        int flag = getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK;
-        if (flag == Configuration.UI_MODE_NIGHT_YES) {
+    private void setThemeUI(ActionBar supportActionBar) {
+        if (RedFireCookBookApplication.isDarkTheme(getResources())) {
             recipeTitle.setTextColor(Color.WHITE);
         }else {
             recipeTitle.setTextColor(Color.BLACK);
@@ -132,6 +128,7 @@ public class RecipeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
         infoLayout = findViewById(R.id.infoLayout);
+        listView = findViewById(R.id.foodIngredientsListView);
 
         setSupportActionBar(toolbar);
 
@@ -139,7 +136,7 @@ public class RecipeActivity extends AppCompatActivity {
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setDisplayShowTitleEnabled(false);
-            isDarkTheme(supportActionBar);
+            setThemeUI(supportActionBar);
         }
     }
 
