@@ -109,6 +109,7 @@
                 android:paddingLeft="1dp"
                 android:paddingRight="1dp"
                 android:paddingBottom="8dp"
+                android:listSelector="@android:color/transparent"
                 android:id="@+id/foodIngredientsListView"/>
 
         </LinearLayout>
