@@ -31,7 +31,7 @@
                 android:id="@+id/titleText"
                 android:layout_margin="5dp"
                 android:textSize="18sp"
-                android:textColor="#323232"/>
+                android:textColor="?android:attr/textColorPrimary"/>
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -1,18 +1,24 @@
 package com.hnqcgc.redfirecookbook.logic;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.dao.RecipeCountDao;
 import com.hnqcgc.redfirecookbook.logic.model.Recipe;
 import com.hnqcgc.redfirecookbook.logic.model.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
+import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Repository {
+
+    private static final String TAG = "Repository";
     
     private static Repository repository;
     
@@ -31,16 +37,14 @@ public class Repository {
         call.enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                if (response.body() != null) {
-                    recipeLiveData.postValue(response.body());
-                }else {
-                    throw new RuntimeException("response body is null");
-                }
+                recipeLiveData.postValue(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<Recipe> call, @NonNull Throwable t) {
-                throw new RuntimeException(t.getMessage());
+                Toast.makeText(RedFireCookBookApplication.getContext(),
+                        "数据访问失败：" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                LogUtil.getInstance().d(TAG, t.getMessage());
             }
         });
         return recipeLiveData;
@@ -52,16 +56,14 @@ public class Repository {
         call.enqueue(new Callback<RecipeDetails>() {
             @Override
             public void onResponse(@NonNull Call<RecipeDetails> call, @NonNull Response<RecipeDetails> response) {
-                if (response.body() != null) {
-                    recipeDetailsLiveData.postValue(response.body());
-                }else {
-                    throw new RuntimeException("response body is null");
-                }
+                recipeDetailsLiveData.postValue(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<RecipeDetails> call, @NonNull Throwable t) {
-                throw new RuntimeException(t.getMessage());
+                Toast.makeText(RedFireCookBookApplication.getContext(),
+                        "数据访问失败：" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                LogUtil.getInstance().d(TAG, t.getMessage());
             }
         });
         return recipeDetailsLiveData;

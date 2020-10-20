@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import java.util.Random;
 
 public class AllRecipeFragment extends Fragment {
+
+    private static final String TAG = "AllRecipeFragment";
 
     private AllRecipeViewModel viewModel;
 
@@ -29,8 +32,6 @@ public class AllRecipeFragment extends Fragment {
     private AllRecipeAdapter adapter;
 
     private final int NO_POSITION = -1;
-
-    private int REFRESH_TYPE;
 
     @Nullable
     @Override
@@ -44,6 +45,9 @@ public class AllRecipeFragment extends Fragment {
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.recycleView);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
+
+        swipeRefresh.setColorSchemeResources(R.color.red_500);
+        swipeRefresh.setOnRefreshListener(this::refreshRecipe);
     }
 
     @Override
@@ -53,6 +57,32 @@ public class AllRecipeFragment extends Fragment {
         if (viewModel.infoList.size() == 0)
             refreshRecipe();
 
+        setRecipeRecycleView();
+
+        initViewModel();
+
+    }
+
+    private void initViewModel() {
+        viewModel.allRecipe.observe(getViewLifecycleOwner(), recipe -> {
+            if (recipe != null) {
+                if (recipe.getCount() > viewModel.getRecipeCount())
+                    viewModel.saveRecipeCount(recipe.getCount());
+                if (viewModel.REFRESH_TYPE == 0) {
+                    viewModel.infoList.addAll(0, recipe.getResults());
+                    swipeRefresh.setRefreshing(false);
+                }else
+                    viewModel.infoList.addAll(recipe.getResults());
+                adapter.notifyDataSetChanged();
+            }else {
+                Toast.makeText(getContext(), "数据访问失败：返回数据为空", Toast.LENGTH_SHORT).show();
+                LogUtil.getInstance().d(TAG, "recipe is null");
+                swipeRefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    private void setRecipeRecycleView() {
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
@@ -63,33 +93,15 @@ public class AllRecipeFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (isBottomViewVisible()) {
-                    REFRESH_TYPE = 1;
+                    viewModel.REFRESH_TYPE = 1;
                     viewModel.searchAllRecipe(viewModel.length += 10);
                 }
             }
         });
-
-        viewModel.allRecipe.observe(getViewLifecycleOwner(), recipe -> {
-            if (recipe != null) {
-                if (recipe.getCount() > viewModel.getRecipeCount())
-                    viewModel.saveRecipeCount(recipe.getCount());
-                if (REFRESH_TYPE == 0) {
-                    viewModel.infoList.addAll(0, recipe.getResults());
-                    swipeRefresh.setRefreshing(false);
-                }else
-                    viewModel.infoList.addAll(recipe.getResults());
-                adapter.notifyDataSetChanged();
-            }else {
-                Toast.makeText(getContext(), "数据未能获取", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        swipeRefresh.setColorSchemeResources(R.color.red_500);
-        swipeRefresh.setOnRefreshListener(this::refreshRecipe);
     }
 
     private void refreshRecipe() {
-        REFRESH_TYPE = 0;
+        viewModel.REFRESH_TYPE = 0;
         viewModel.length = new Random().nextInt(viewModel.getRecipeCount());
         viewModel.searchAllRecipe(viewModel.length);
         swipeRefresh.setRefreshing(true);

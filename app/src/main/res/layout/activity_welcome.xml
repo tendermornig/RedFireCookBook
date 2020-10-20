@@ -20,6 +20,6 @@
         android:layout_below="@id/appIcon"
         android:layout_centerHorizontal="true"
         android:textSize="35sp"
-        android:textColor="#FF323232"/>
+        android:textColor="?android:attr/textColorPrimary"/>
 
 </RelativeLayout>

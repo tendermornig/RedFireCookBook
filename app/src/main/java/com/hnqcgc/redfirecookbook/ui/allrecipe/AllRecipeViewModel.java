@@ -14,17 +14,19 @@ import java.util.List;
 
 public class AllRecipeViewModel extends ViewModel {
 
-    private final MutableLiveData<Integer> queryNumberLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> queryPositionLiveData = new MutableLiveData<>();
 
     public List<RecipeInfo> infoList = new ArrayList<>();
 
     public int length;
 
-    public LiveData<Recipe> allRecipe = Transformations.switchMap(queryNumberLiveData,
+    public int REFRESH_TYPE;
+
+    public LiveData<Recipe> allRecipe = Transformations.switchMap(queryPositionLiveData,
             input -> Repository.getInstance().searchAllRecipe(input));
 
     public void searchAllRecipe(int offset) {
-        queryNumberLiveData.setValue(offset);
+        queryPositionLiveData.setValue(offset);
     }
 
     public void saveRecipeCount(int count) {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.bumptech.glide.Glide;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.logic.model.RecipeInfo;
+import com.hnqcgc.redfirecookbook.ui.recipe.RecipeActivity;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -38,13 +39,16 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private final ImageView recipeImage;
         private final TextView titleText;
         private final TextView messageText;
+        private final ImageView collectionImg;
 
         public NormalViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImage = itemView.findViewById(R.id.recipeImage);
             titleText = itemView.findViewById(R.id.titleText);
             messageText = itemView.findViewById(R.id.messageText);
+            collectionImg = itemView.findViewById(R.id.collectionImg);
         }
+
     }
 
     static class BottomRefreshViewHolder extends RecyclerView.ViewHolder {
@@ -59,10 +63,21 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_NORMAL_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item, parent, false);
-            return new NormalViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.recipe_item, parent, false);
+            NormalViewHolder holder = new NormalViewHolder(view);
+            holder.itemView.setOnClickListener(v -> {
+                int position = holder.getAdapterPosition();
+                int recipeId = infoList.get(position).getRecipeId();
+                RecipeActivity.startRecipeActivity(parent.getContext(), recipeId);
+            });
+            holder.collectionImg.setOnClickListener(v -> {
+
+            });
+            return holder;
         }else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_refresh_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.bottom_refresh_layout, parent, false);
             return new BottomRefreshViewHolder(view);
         }
     }
