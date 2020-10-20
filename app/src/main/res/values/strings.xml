@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">红火菜谱</string>
     <string name="app_home">菜谱大全</string>
+    <string name="recipe_info_text">菜品信息</string>
 </resources>

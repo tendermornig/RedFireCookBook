@@ -15,8 +15,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
+
+import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -46,6 +50,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     private TextView recipeTitle;
 
+    private ListView infoListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +69,10 @@ public class RecipeActivity extends AppCompatActivity {
                 Glide.with(this)
                         .load(recipeDetails.getImg())
                         .into(recipeImg);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(RecipeActivity.this,
+                        android.R.layout.simple_expandable_list_item_1, recipeDetails.getInfo().get(0).asList());
+                infoListView.setAdapter(adapter);
             }else {
                 Toast.makeText(this, "数据获取失败", Toast.LENGTH_SHORT).show();
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
@@ -113,6 +123,7 @@ public class RecipeActivity extends AppCompatActivity {
         recipeTitle = findViewById(R.id.recipeTitle);
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
+        infoListView = findViewById(R.id.infoListView);
 
         setSupportActionBar(toolbar);
 
