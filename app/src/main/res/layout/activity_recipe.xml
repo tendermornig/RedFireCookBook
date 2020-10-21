@@ -101,16 +101,20 @@
             <com.hnqcgc.redfirecookbook.ui.recipe.FoodIngredientsListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginStart="35dp"
                 android:layout_marginEnd="35dp"
                 android:divider="@drawable/list_item_dash"
                 android:dividerHeight="5dp"
-                android:paddingLeft="1dp"
-                android:paddingRight="1dp"
-                android:paddingBottom="8dp"
                 android:listSelector="@android:color/transparent"
                 android:id="@+id/foodIngredientsListView"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                android:background="@drawable/list_item_dash"/>
 
         </LinearLayout>
 

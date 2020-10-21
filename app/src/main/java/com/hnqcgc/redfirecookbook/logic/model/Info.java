@@ -57,16 +57,16 @@ public class Info {
 
     public List<String> asList() {
         List<String> info = new ArrayList<>();
-        if (!"".equals(flavour)) {
+        if (null != flavour) {
             info.add(getFlavour());
         }
-        if (!"".equals(method)) {
+        if (null != method) {
             info.add(getMethod());
         }
-        if (!"".equals(time)) {
+        if (null != time) {
             info.add(getTime());
         }
-        if (!"".equals(degree)) {
+        if (null != degree) {
             info.add(getDegree());
         }
         return info;

@@ -18,7 +18,7 @@ public class FoodIngredientsListView extends ListView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
+    @Override//解决ListView在NestedScrollView中只显示一个子项的问题
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
