@@ -82,15 +82,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     static class StepWorkViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView step;
-
         private final ImageView stepImg;
 
         private final TextView stepContent;
 
         public StepWorkViewHolder(@NonNull View itemView) {
             super(itemView);
-            step = itemView.findViewById(R.id.step);
             stepImg = itemView.findViewById(R.id.stepImg);
             stepContent = itemView.findViewById(R.id.stepContent);
         }
@@ -127,20 +124,23 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof TitleViewHolder) {
-            setTitle((TitleViewHolder) holder, position);
-        }else if (holder instanceof InfoViewHolder) {
-            setInfo((InfoViewHolder) holder, position -1);
+        if (holder instanceof StepWorkViewHolder) {
+            setStepWork((StepWorkViewHolder) holder, position - (infoList.size() + materials.size() + 3));
         }else if (holder instanceof MaterialViewHolder) {
             setMaterial((MaterialViewHolder) holder, position - (infoList.size() + 2));
+        }else if (holder instanceof InfoViewHolder) {
+            setInfo((InfoViewHolder) holder, position -1);
         }else {
-            StepWorkViewHolder viewHolder = (StepWorkViewHolder) holder;
-            Glide.with(context)
-                    .load(stepWorks.get(position - (infoList.size() + materials.size() + 3)).getImg())
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
-                    .into(viewHolder.stepImg);
-            viewHolder.stepContent.setText(stepWorks.get(position - (infoList.size() + materials.size() + 3)).getStep());
+            setTitle((TitleViewHolder) holder, position);
         }
+    }
+
+    private void setStepWork(@NonNull StepWorkViewHolder holder, int position) {
+        Glide.with(context)
+                .load(stepWorks.get(position).getImg())
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                .into(holder.stepImg);
+        holder.stepContent.setText(stepWorks.get(position).getStep());
     }
 
     private void setMaterial(@NonNull MaterialViewHolder holder, int position) {

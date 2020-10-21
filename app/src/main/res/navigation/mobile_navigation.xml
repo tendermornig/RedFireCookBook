@@ -11,5 +11,4 @@
         android:label="@string/app_home"
         tools:layout="@layout/fragment_all_recipe"/>
 
-
 </navigation>
