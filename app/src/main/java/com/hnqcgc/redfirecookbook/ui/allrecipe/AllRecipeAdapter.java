@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.hnqcgc.redfirecookbook.R;
-import com.hnqcgc.redfirecookbook.logic.model.RecipeInfo;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.RecipeInfo;
 import com.hnqcgc.redfirecookbook.ui.recipe.RecipeActivity;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -71,9 +70,6 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 int recipeId = infoList.get(position).getRecipeId();
                 RecipeActivity.startRecipeActivity(parent.getContext(), recipeId);
             });
-            holder.collectionImg.setOnClickListener(v -> {
-
-            });
             return holder;
         }else {
             View view = LayoutInflater.from(parent.getContext())
@@ -89,6 +85,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             RecipeInfo recipeInfo = infoList.get(holder.getAdapterPosition());
             Glide.with(context)
                     .load(recipeInfo.getCover())
+                    .error(R.drawable.img_load_fail)
                     .into(viewHolder.recipeImage);
             viewHolder.titleText.setText(recipeInfo.getTitle());
             if (!"".equals(recipeInfo.getMessage())) {

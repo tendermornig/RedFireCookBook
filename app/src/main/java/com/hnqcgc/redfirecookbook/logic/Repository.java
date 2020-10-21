@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.dao.RecipeCountDao;
-import com.hnqcgc.redfirecookbook.logic.model.Recipe;
-import com.hnqcgc.redfirecookbook.logic.model.RecipeDetails;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.hnqcgc.redfirecookbook.logic.Repository;
-import com.hnqcgc.redfirecookbook.logic.model.RecipeDetails;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 
 public class RecipeViewModel extends ViewModel {
 

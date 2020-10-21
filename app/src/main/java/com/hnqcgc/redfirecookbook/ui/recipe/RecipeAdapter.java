@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.hnqcgc.redfirecookbook.R;
-import com.hnqcgc.redfirecookbook.logic.model.Material;
-import com.hnqcgc.redfirecookbook.logic.model.StepWork;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.Material;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.StepWork;
 
 import java.util.List;
 

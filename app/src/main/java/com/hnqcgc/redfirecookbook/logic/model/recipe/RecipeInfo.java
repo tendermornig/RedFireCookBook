@@ -1,4 +1,4 @@
-package com.hnqcgc.redfirecookbook.logic.model;
+package com.hnqcgc.redfirecookbook.logic.model.recipe;
 
 public class RecipeInfo {
 

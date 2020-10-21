@@ -6,8 +6,8 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.hnqcgc.redfirecookbook.logic.Repository;
-import com.hnqcgc.redfirecookbook.logic.model.Recipe;
-import com.hnqcgc.redfirecookbook.logic.model.RecipeInfo;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.RecipeInfo;
 
 import java.util.ArrayList;
 import java.util.List;

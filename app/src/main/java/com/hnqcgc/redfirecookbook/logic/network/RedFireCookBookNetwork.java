@@ -2,8 +2,8 @@ package com.hnqcgc.redfirecookbook.logic.network;
 
 
 
-import com.hnqcgc.redfirecookbook.logic.model.Recipe;
-import com.hnqcgc.redfirecookbook.logic.model.RecipeDetails;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 
 import retrofit2.Call;
 

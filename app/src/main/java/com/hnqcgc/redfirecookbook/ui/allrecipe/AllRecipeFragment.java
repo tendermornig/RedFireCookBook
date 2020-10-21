@@ -80,7 +80,6 @@ public class AllRecipeFragment extends Fragment {
                     viewModel.infoList.addAll(recipe.getResults());
                 adapter.notifyDataSetChanged();
             }else {
-                Toast.makeText(getContext(), "数据访问失败：返回数据为空", Toast.LENGTH_SHORT).show();
                 LogUtil.getInstance().d(TAG, "recipe is null");
                 swipeRefresh.setRefreshing(false);
             }
