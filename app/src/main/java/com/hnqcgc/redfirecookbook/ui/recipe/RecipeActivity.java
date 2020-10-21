@@ -22,6 +22,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.model.Material;
+import com.hnqcgc.redfirecookbook.logic.model.StepWork;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import java.util.List;
@@ -68,7 +69,8 @@ public class RecipeActivity extends AppCompatActivity {
                         .into(recipeImg);
                 List<String> infoList = recipeDetails.getInfo().get(0).asList();
                 List<Material> materials = recipeDetails.getMaterials();
-                RecipeAdapter adapter = new RecipeAdapter(infoList, materials);
+                List<StepWork> stepWorks = recipeDetails.getStepWorks();
+                RecipeAdapter adapter = new RecipeAdapter(this, infoList, materials, stepWorks);
                 recipeBody.setAdapter(adapter);
             }else {
                 Toast.makeText(this, "数据获取失败", Toast.LENGTH_SHORT).show();

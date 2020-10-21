@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/titleText"
     android:textSize="18sp"
+    android:textStyle="bold"
     android:textColor="?android:attr/textColorPrimary"
     android:layout_marginStart="18sp"
     android:layout_marginTop="20dp"

@@ -1,23 +1,33 @@
 package com.hnqcgc.redfirecookbook.ui.recipe;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.logic.model.Material;
+import com.hnqcgc.redfirecookbook.logic.model.StepWork;
 
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final Context context;
+
     private final List<String> infoList;
 
     private final List<Material> materials;
+
+    private final List<StepWork> stepWorks;
 
     private static final int TITLE = 0;
 
@@ -27,9 +37,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static final int STEP_WORK = 3;
 
-    public RecipeAdapter(List<String> infoList, List<Material> materials) {
+    public RecipeAdapter(Context context, List<String> infoList, List<Material> materials, List<StepWork> stepWorks) {
+        this.context = context;
         this.infoList = infoList;
         this.materials = materials;
+        this.stepWorks = stepWorks;
     }
 
     static class TitleViewHolder extends RecyclerView.ViewHolder {
@@ -70,8 +82,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     static class StepWorkViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView step;
+
+        private final ImageView stepImg;
+
+        private final TextView stepContent;
+
         public StepWorkViewHolder(@NonNull View itemView) {
             super(itemView);
+            step = itemView.findViewById(R.id.step);
+            stepImg = itemView.findViewById(R.id.stepImg);
+            stepContent = itemView.findViewById(R.id.stepContent);
         }
 
     }
@@ -107,30 +128,47 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TitleViewHolder) {
-            TitleViewHolder viewHolder = (TitleViewHolder) holder;
-            if (position == 0){
-                viewHolder.titleText.setText(R.string.recipe_info_text);
-            }else if (position == infoList.size() +1) {
-                viewHolder.titleText.setText(R.string.material_text);
-            }else {
-                viewHolder.titleText.setText(R.string.step_work_text);
-            }
+            setTitle((TitleViewHolder) holder, position);
         }else if (holder instanceof InfoViewHolder) {
-            InfoViewHolder viewHolder = (InfoViewHolder) holder;
-            viewHolder.infoText.setText(infoList.get(position - 1));
+            setInfo((InfoViewHolder) holder, position -1);
         }else if (holder instanceof MaterialViewHolder) {
-            MaterialViewHolder viewHolder = (MaterialViewHolder) holder;
-            int pos = position - (infoList.size() + 2);
-            viewHolder.foodName.setText
-                    (materials.get(pos).getName());
-            viewHolder.foodNumber.setText
-                    (materials.get(pos).getNum());
+            setMaterial((MaterialViewHolder) holder, position - (infoList.size() + 2));
+        }else {
+            StepWorkViewHolder viewHolder = (StepWorkViewHolder) holder;
+            Glide.with(context)
+                    .load(stepWorks.get(position - (infoList.size() + materials.size() + 3)).getImg())
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(60)))
+                    .into(viewHolder.stepImg);
+            viewHolder.stepContent.setText(stepWorks.get(position - (infoList.size() + materials.size() + 3)).getStep());
         }
+    }
+
+    private void setMaterial(@NonNull MaterialViewHolder holder, int position) {
+        holder.foodName.setText
+                (materials.get(position).getName());
+        holder.foodNumber.setText
+                (materials.get(position).getNum());
+    }
+
+    private void setInfo(@NonNull InfoViewHolder holder, int position) {
+        holder.infoText.setText(infoList.get(position));
+    }
+
+    private void setTitle(@NonNull TitleViewHolder holder, int position) {
+        int textId;
+        if (position == 0){
+            textId = R.string.recipe_info_text;
+        }else if (position == infoList.size() +1) {
+            textId = R.string.material_text;
+        }else {
+            textId = R.string.step_work_text;
+        }
+        holder.titleText.setText(textId);
     }
 
     @Override
     public int getItemCount() {
-        return infoList.size() + materials.size() + 2;
+        return infoList.size() + materials.size() + stepWorks.size() + 3;
     }
 
     @Override
@@ -139,6 +177,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return INFO;
         }else if (position > infoList.size() +1 && position < (infoList.size() + materials.size() + 2)) {
             return MATERIAL;
+        }else if (position > (infoList.size() + materials.size() + 2)){
+            return STEP_WORK;
         }else {
             return TITLE;
         }
