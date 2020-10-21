@@ -5,17 +5,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
+import com.hnqcgc.redfirecookbook.logic.model.Material;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
 import java.util.List;
@@ -47,9 +46,8 @@ public class RecipeActivity extends AppCompatActivity {
 
     private TextView recipeTitle;
 
-    private LinearLayout infoLayout;
+    private RecyclerView recipeBody;
 
-    private FoodIngredientsListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +66,10 @@ public class RecipeActivity extends AppCompatActivity {
                 Glide.with(this)
                         .load(recipeDetails.getImg())
                         .into(recipeImg);
-                List<String> dataList = recipeDetails.getInfo().get(0).asList();
-                for (String str:
-                     dataList) {
-                    View view = LayoutInflater.from(this).inflate(R.layout.recipe_info_text,
-                            infoLayout, false);
-                    TextView infoText = view.findViewById(R.id.recipeInfoText);
-                    infoText.setText(str);
-                    infoLayout.addView(view);
-                }
-                FoodIngredientsAdapter adapter = new FoodIngredientsAdapter(this, recipeDetails.getMaterials());
-                listView.setAdapter(adapter);
+                List<String> infoList = recipeDetails.getInfo().get(0).asList();
+                List<Material> materials = recipeDetails.getMaterials();
+                RecipeAdapter adapter = new RecipeAdapter(infoList, materials);
+                recipeBody.setAdapter(adapter);
             }else {
                 Toast.makeText(this, "数据获取失败", Toast.LENGTH_SHORT).show();
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
@@ -127,8 +118,7 @@ public class RecipeActivity extends AppCompatActivity {
         recipeTitle = findViewById(R.id.recipeTitle);
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
-        infoLayout = findViewById(R.id.infoLayout);
-        listView = findViewById(R.id.foodIngredientsListView);
+        recipeBody = findViewById(R.id.recipeBody);
 
         setSupportActionBar(toolbar);
 
@@ -138,6 +128,9 @@ public class RecipeActivity extends AppCompatActivity {
             supportActionBar.setDisplayShowTitleEnabled(false);
             setThemeUI(supportActionBar);
         }
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        recipeBody.setLayoutManager(manager);
     }
 
     public static void startRecipeActivity(Context context, int recipeId) {

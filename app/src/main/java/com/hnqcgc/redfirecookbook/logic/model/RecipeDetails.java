@@ -2,7 +2,6 @@ package com.hnqcgc.redfirecookbook.logic.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetails {
@@ -15,7 +14,7 @@ public class RecipeDetails {
     private List<Info> info;
 
     @SerializedName("step_word")
-    private List<StepWord> stepWords;
+    private List<StepWork> stepWorks;
 
     private String title;
 
@@ -24,11 +23,11 @@ public class RecipeDetails {
     public RecipeDetails() {
     }
 
-    public RecipeDetails(int recipeId, List<Material> materials, List<Info> info, List<StepWord> stepWords, String title, String img) {
+    public RecipeDetails(int recipeId, List<Material> materials, List<Info> info, List<StepWork> stepWorks, String title, String img) {
         this.recipeId = recipeId;
         this.materials = materials;
         this.info = info;
-        this.stepWords = stepWords;
+        this.stepWorks = stepWorks;
         this.title = title;
         this.img = img;
     }
@@ -57,12 +56,12 @@ public class RecipeDetails {
         this.info = info;
     }
 
-    public List<StepWord> getStepWords() {
-        return stepWords;
+    public List<StepWork> getStepWorks() {
+        return stepWorks;
     }
 
-    public void setStepWords(List<StepWord> stepWords) {
-        this.stepWords = stepWords;
+    public void setStepWorks(List<StepWork> stepWorks) {
+        this.stepWorks = stepWorks;
     }
 
     public String getTitle() {

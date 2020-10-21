@@ -1,12 +1,12 @@
 package com.hnqcgc.redfirecookbook.logic.model;
 
-public class StepWord {
+public class StepWork {
 
     private String step;
 
     private String img;
 
-    public StepWord(String step, String img) {
+    public StepWork(String step, String img) {
         this.step = step;
         this.img = img;
     }
