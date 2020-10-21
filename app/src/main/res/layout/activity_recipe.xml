@@ -67,54 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recipeInfo"
-                android:textSize="18sp"
-                android:text="@string/recipe_info_text"
-                android:textColor="?android:attr/textColorPrimary"
-                android:layout_marginStart="18sp"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"/>
+            <include layout="@layout/recipe_info"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="42dp"
-                android:id="@+id/infoLayout"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/foodIngredients"
-                android:textSize="18sp"
-                android:text="@string/food_ingredients"
-                android:textColor="?android:attr/textColorPrimary"
-                android:layout_marginStart="18sp"
-                android:layout_marginTop="20dp"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"/>
-
-            <com.hnqcgc.redfirecookbook.ui.recipe.FoodIngredientsListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="35dp"
-                android:divider="@drawable/list_item_dash"
-                android:dividerHeight="5dp"
-                android:listSelector="@android:color/transparent"
-                android:id="@+id/foodIngredientsListView"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="35dp"
-                android:background="@drawable/list_item_dash"/>
+            <include layout="@layout/food_ingredients"/>
 
         </LinearLayout>
 

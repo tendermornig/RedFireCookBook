@@ -8,4 +8,6 @@
         android:color="@color/grey_400_alpha_100"
         android:dashGap="3dp"
         android:dashWidth="6dp"/>
+    <!-- 虚线的高度 -->
+    <size android:height="5dp"/>
 </shape>
