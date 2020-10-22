@@ -20,7 +20,7 @@ public class RedFireCookBookDB {
         return redFireCookBookDB;
     }
 
-    public int insertCollection(Collection collection) {
+    public long insertCollection(Collection collection) {
         return collectionDao.insertCollection(collection);
     }
 

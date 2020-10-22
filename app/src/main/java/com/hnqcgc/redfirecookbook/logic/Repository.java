@@ -82,7 +82,7 @@ public class Repository {
         return RecipeCountDao.getInstance().getRecipeCount();
     }
 
-    public int insertCollection(Collection collection) {
+    public long insertCollection(Collection collection) {
         return RedFireCookBookDB.getInstance().insertCollection(collection);
     }
 

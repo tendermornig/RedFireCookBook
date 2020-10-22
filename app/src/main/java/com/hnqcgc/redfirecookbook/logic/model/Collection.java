@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Collection {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     private int recipeId;
 
@@ -21,23 +21,11 @@ public class Collection {
 
     private String category;
 
-    public Collection() {
-    }
-
-    public Collection(int recipeId, String title, String message, String gredient, String cover, String category) {
-        this.recipeId = recipeId;
-        this.title = title;
-        this.message = message;
-        this.gredient = gredient;
-        this.cover = cover;
-        this.category = category;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -4,6 +4,11 @@
     <item
         android:id="@+id/navigation_recipe"
         android:icon="@drawable/recipe"
-        android:title="@string/app_home" />
+        android:title="@string/all_recipe" />
+
+    <item
+        android:id="@+id/navigation_collection"
+        android:icon="@drawable/not_collection"
+        android:title="@string/collection"/>
 
 </menu>

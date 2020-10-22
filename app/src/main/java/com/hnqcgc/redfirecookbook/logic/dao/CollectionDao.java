@@ -12,7 +12,7 @@ import java.util.List;
 public interface CollectionDao {
 
     @Insert
-    int insertCollection(Collection collection);
+    long insertCollection(Collection collection);
 
     @Query("select * from Collection")
     List<Collection> loadAllCollection();

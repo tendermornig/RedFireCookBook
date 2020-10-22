@@ -8,7 +8,13 @@
     <fragment
         android:id="@+id/navigation_recipe"
         android:name="com.hnqcgc.redfirecookbook.ui.allrecipe.AllRecipeFragment"
-        android:label="@string/app_home"
+        android:label="@string/all_recipe"
         tools:layout="@layout/fragment_all_recipe"/>
+
+    <fragment
+        android:id="@+id/navigation_collection"
+        android:name="com.hnqcgc.redfirecookbook.ui.collection.CollectionFragment"
+        android:label="@string/collection"
+        tools:layout="@layout/fragment_collection"/>
 
 </navigation>

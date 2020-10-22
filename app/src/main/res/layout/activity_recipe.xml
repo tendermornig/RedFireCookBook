@@ -63,4 +63,18 @@
         android:background="?android:attr/colorPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/collectionFloatBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/not_collection"
+        app:backgroundTint="?attr/colorPrimary"
+        app:fabSize="normal"
+        app:layout_anchor="@id/recipeBody"
+        app:layout_anchorGravity="bottom|end"
+        android:contentDescription="@string/collection" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
