@@ -86,11 +86,13 @@ public class Repository {
         return RedFireCookBookDB.getInstance().insertCollection(collection);
     }
 
-    public List<Collection> loadAllCollection() {
-        return RedFireCookBookDB.getInstance().loadAllCollection();
+    public MutableLiveData<List<Collection>> loadAllCollection() {
+        MutableLiveData<List<Collection>> collectionsLiveData = new MutableLiveData<>();
+        collectionsLiveData.setValue(RedFireCookBookDB.getInstance().loadAllCollection());
+        return collectionsLiveData;
     }
 
-    public int deleteCollectionById(int id) {
+    public long deleteCollectionById(long id) {
         return RedFireCookBookDB.getInstance().deleteCollectionById(id);
     }
 

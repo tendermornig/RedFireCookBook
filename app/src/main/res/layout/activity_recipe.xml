@@ -7,7 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.recipe.RecipeActivity">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="400dp"
@@ -45,7 +44,6 @@
                 android:background="@drawable/white_fillet_background"
                 app:layout_collapseMode="pin"/>
 
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
@@ -67,14 +65,12 @@
         android:id="@+id/collectionFloatBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="24dp"
+        android:layout_margin="24dp"
         android:src="@drawable/not_collection"
         app:backgroundTint="?attr/colorPrimary"
         app:fabSize="normal"
         app:layout_anchor="@id/recipeBody"
         app:layout_anchorGravity="bottom|end"
         android:contentDescription="@string/collection" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

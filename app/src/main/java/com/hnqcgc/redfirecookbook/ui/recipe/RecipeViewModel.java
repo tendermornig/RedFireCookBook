@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.hnqcgc.redfirecookbook.logic.Repository;
+import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 
 public class RecipeViewModel extends ViewModel {
@@ -17,6 +18,10 @@ public class RecipeViewModel extends ViewModel {
 
     public void searchRecipe(int recipeId) {
         queryRecipeIdLiveData.setValue(recipeId);
+    }
+
+    public long insertCollection(Collection collection) {
+        return Repository.getInstance().insertCollection(collection);
     }
 
 }

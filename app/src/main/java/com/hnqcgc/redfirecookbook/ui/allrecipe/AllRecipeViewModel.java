@@ -20,8 +20,6 @@ public class AllRecipeViewModel extends ViewModel {
 
     public int length;
 
-    public AllRecipeFragment.RefreshType REFRESH_TYPE;
-
     public LiveData<Recipe> allRecipe = Transformations.switchMap(queryPositionLiveData,
             input -> Repository.getInstance().searchAllRecipe(input));
 

@@ -17,7 +17,10 @@ public interface CollectionDao {
     @Query("select * from Collection")
     List<Collection> loadAllCollection();
 
+    @Query("select * from Collection where title like :title")
+    List<Collection> searchCollection(String title);
+
     @Query("delete from Collection where id = :id")
-    int deleteCollectionById(int id);
+    long deleteCollectionById(long id);
 
 }

@@ -1,13 +1,5 @@
 package com.hnqcgc.redfirecookbook.ui.recipe;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,8 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.Material;
@@ -48,6 +49,8 @@ public class RecipeActivity extends AppCompatActivity {
     private TextView recipeTitle;
 
     private RecyclerView recipeBody;
+
+    private FloatingActionButton collectionFloatBtn;
 
 
     @Override
@@ -120,6 +123,7 @@ public class RecipeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolBar);
         recipeImg = findViewById(R.id.recipeImg);
         recipeBody = findViewById(R.id.recipeBody);
+        collectionFloatBtn = findViewById(R.id.collectionFloatBtn);
 
         setSupportActionBar(toolbar);
 
@@ -132,6 +136,10 @@ public class RecipeActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recipeBody.setLayoutManager(manager);
+
+        collectionFloatBtn.setOnClickListener(v -> {
+            //viewModel.insertCollection();
+        });
     }
 
     public static void startRecipeActivity(Context context, int recipeId) {
