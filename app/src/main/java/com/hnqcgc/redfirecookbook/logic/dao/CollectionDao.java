@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.hnqcgc.redfirecookbook.logic.model.collection.Collection;
+import com.hnqcgc.redfirecookbook.logic.model.Collection;
 
 import java.util.List;
 

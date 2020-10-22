@@ -1,4 +1,4 @@
-package com.hnqcgc.redfirecookbook.logic.model.collection;
+package com.hnqcgc.redfirecookbook.logic.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
