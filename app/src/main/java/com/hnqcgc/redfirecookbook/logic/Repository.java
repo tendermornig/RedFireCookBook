@@ -43,7 +43,7 @@ public class Repository {
         call.enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                recipeLiveData.postValue(response.body());
+                recipeLiveData.setValue(response.body());
             }
 
             @Override
@@ -92,6 +92,10 @@ public class Repository {
 
     public LiveData<List<Collection>> loadAllCollection() {
         return RedFireCookBookDB.getInstance().loadAllCollection();
+    }
+
+    public LiveData<List<Long>> loadAllCollectionRecipeId() {
+        return RedFireCookBookDB.getInstance().loadAllCollectionRecipeId();
     }
 
     public int deleteCollectionById(long id) {

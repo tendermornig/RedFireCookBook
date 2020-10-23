@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.RecipeInfo;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class AllRecipeFragment extends Fragment {
@@ -39,6 +42,13 @@ public class AllRecipeFragment extends Fragment {
         BOTTOM_REFRESH
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (viewModel != null)
+            viewModel.searchAllRecipeId();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,8 +70,10 @@ public class AllRecipeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (viewModel.infoList.size() == 0)
+        if (viewModel.infoList.size() == 0){
             refreshRecipe();
+            viewModel.searchAllRecipeId();
+        }
 
         setRecipeRecycleView();
 
@@ -83,6 +95,19 @@ public class AllRecipeFragment extends Fragment {
             }else {
                 LogUtil.getInstance().d(TAG, "recipe is null");
                 swipeRefresh.setRefreshing(false);
+            }
+        });
+        viewModel.allRecipeIdLiveData.observe(getViewLifecycleOwner(), longs -> {
+            int index;
+            List<Long> recipeIds = asRecipeIdList(viewModel.infoList);
+            for (long recipeId : longs) {
+                index = recipeIds.indexOf(recipeId);
+                if (index != -1) {
+                    RecipeInfo info = viewModel.infoList.get(index);
+                    info.setCollection(true);
+                    viewModel.infoList.set(index, info);
+                    adapter.notifyItemChanged(index, R.id.collectionImg);
+                }
             }
         });
     }
@@ -122,6 +147,14 @@ public class AllRecipeFragment extends Fragment {
     private boolean isBottomViewVisible() {
         int lastVisibleItem = getLastVisibleItemPosition();
         return lastVisibleItem != NO_POSITION && lastVisibleItem == adapter.getItemCount() - 1;
+    }
+
+    private List<Long> asRecipeIdList(List<RecipeInfo> recipeInfoList) {
+        List<Long> recipeIds = new ArrayList<>();
+        for (RecipeInfo info : recipeInfoList) {
+            recipeIds.add(info.getRecipeId());
+        }
+        return recipeIds;
     }
 
 }

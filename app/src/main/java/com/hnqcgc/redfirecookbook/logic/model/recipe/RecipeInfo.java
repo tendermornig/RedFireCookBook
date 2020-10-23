@@ -2,7 +2,7 @@ package com.hnqcgc.redfirecookbook.logic.model.recipe;
 
 public class RecipeInfo {
 
-    private int recipeId;
+    private long recipeId;
 
     private String title;
 
@@ -14,6 +14,8 @@ public class RecipeInfo {
 
     private String category;
 
+    private boolean isCollection = false;
+
     public RecipeInfo(int recipeId, String title, String message, String gredient, String cover, String category) {
         this.recipeId = recipeId;
         this.title = title;
@@ -23,11 +25,11 @@ public class RecipeInfo {
         this.category = category;
     }
 
-    public int getRecipeId() {
+    public long getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(int recipeId) {
+    public void setRecipeId(long recipeId) {
         this.recipeId = recipeId;
     }
 
@@ -69,6 +71,14 @@ public class RecipeInfo {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isCollection() {
+        return isCollection;
+    }
+
+    public void setCollection(boolean collection) {
+        this.isCollection = collection;
     }
 
 }

@@ -28,6 +28,7 @@ import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.StepWork;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
+import java.util.Date;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -77,6 +78,18 @@ public class RecipeActivity extends AppCompatActivity {
                 List<StepWork> stepWorks = recipeDetails.getStepWorks();
                 RecipeAdapter adapter = new RecipeAdapter(this, infoList, materials, stepWorks);
                 recipeBody.setAdapter(adapter);
+
+                collectionFloatBtn.setOnClickListener(v -> {
+                    RecipeDetails details = viewModel.recipeDetailsLiveData.getValue();
+                    Collection collection = new Collection();
+                    collection.setRecipeId(details.getRecipeId());
+                    collection.setTitle(details.getTitle());
+                    collection.setImg(details.getImg());
+                    collection.setMaterial(details.toMaterialString());
+                    collection.setCollectionTime(new Date().getTime());
+                    viewModel.insertCollection(collection);
+                });
+
             }else {
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
             }
@@ -146,15 +159,6 @@ public class RecipeActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recipeBody.setLayoutManager(manager);
 
-        collectionFloatBtn.setOnClickListener(v -> {
-            RecipeDetails recipeDetails = viewModel.recipeDetailsLiveData.getValue();
-            Collection collection = new Collection();
-            collection.setRecipeId(recipeDetails.getRecipeId());
-            collection.setTitle(recipeDetails.getTitle());
-            collection.setImg(recipeDetails.getImg());
-            collection.setMaterial(recipeDetails.toMaterialString());
-            viewModel.insertCollection(collection);
-        });
     }
 
     public static void startRecipeActivity(Context context, long recipeId) {

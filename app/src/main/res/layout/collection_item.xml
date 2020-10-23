@@ -17,7 +17,7 @@
             android:id="@+id/collectionRecipeImage"
             android:scaleType="centerCrop"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -26,30 +26,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/collectionRecipeName"
+                android:layout_gravity="center_horizontal"
                 android:textStyle="bold"
-                android:padding="6dp"
+                android:padding="4dp"
                 android:textSize="18sp"
+                android:singleLine="true"
+                android:ellipsize="middle"
                 android:textColor="?android:attr/textColorPrimary"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/collectionRecipeCategory"
-                android:layout_alignParentEnd="true"
-                android:padding="6dp"
-                android:textSize="16sp"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:id="@+id/collectionTime"
+                android:layout_gravity="center_horizontal"
+                android:padding="4dp"
+                android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/collectionRecipeMaterial"
-                android:layout_below="@id/collectionRecipeName"
-                android:padding="10dp"
-                android:textSize="16sp"
+                android:padding="4dp"
+                android:textSize="14sp"
                 android:textColor="?android:attr/textColorPrimary"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

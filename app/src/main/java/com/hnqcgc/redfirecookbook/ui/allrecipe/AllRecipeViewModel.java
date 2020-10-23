@@ -16,6 +16,11 @@ public class AllRecipeViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> queryPositionLiveData = new MutableLiveData<>();
 
+    private final MutableLiveData<Object> searchAllRecipeIdLiveData = new MutableLiveData<>();
+
+    public final LiveData<List<Long>> allRecipeIdLiveData = Transformations.switchMap(
+            searchAllRecipeIdLiveData, input -> Repository.getInstance().loadAllCollectionRecipeId());
+
     public List<RecipeInfo> infoList = new ArrayList<>();
 
     public int length;
@@ -25,6 +30,10 @@ public class AllRecipeViewModel extends ViewModel {
 
     public void searchAllRecipe(int offset) {
         queryPositionLiveData.setValue(offset);
+    }
+
+    public void searchAllRecipeId() {
+        searchAllRecipeIdLiveData.setValue(searchAllRecipeIdLiveData.getValue());
     }
 
     public void saveRecipeCount(int count) {

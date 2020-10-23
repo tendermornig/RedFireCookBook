@@ -16,8 +16,11 @@ public interface CollectionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertCollection(Collection collection);
 
-    @Query("select * from Collection")
+    @Query("select * from Collection ORDER BY collectionTime ASC")
     LiveData<List<Collection>> loadAllCollection();
+
+    @Query("select recipeId from Collection")
+    LiveData<List<Long>> loadAllCollectionRecipeId();
 
     @Query("select * from Collection where title like :title")
     List<Collection> searchCollection(String title);

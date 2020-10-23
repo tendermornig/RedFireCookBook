@@ -30,6 +30,10 @@ public class RedFireCookBookDB {
         return collectionDao.loadAllCollection();
     }
 
+    public LiveData<List<Long>> loadAllCollectionRecipeId() {
+        return collectionDao.loadAllCollectionRecipeId();
+    }
+
     public int deleteCollectionById(long id) {
         return collectionDao.deleteCollectionById(id);
     }

@@ -85,7 +85,7 @@ public class RecipeDetails {
         for (Material material : materials) {
             buffer.append("、").append(material.getName());
         }
-        return buffer.toString().substring(1);
+        return "    材料：" + buffer.toString().substring(1);
     }
 
 }

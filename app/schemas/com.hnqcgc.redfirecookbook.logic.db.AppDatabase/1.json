@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "22b6dc680fc915808fc2740fa287c756",
+    "identityHash": "c2f16cb237413d3e7376b86f202865e3",
     "entities": [
       {
         "tableName": "Collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER NOT NULL, `title` TEXT, `img` TEXT, `material` TEXT, PRIMARY KEY(`recipeId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER NOT NULL, `title` TEXT, `img` TEXT, `material` TEXT, `collectionTime` INTEGER NOT NULL, PRIMARY KEY(`recipeId`))",
         "fields": [
           {
             "fieldPath": "recipeId",
@@ -31,6 +31,12 @@
             "columnName": "material",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "collectionTime",
+            "columnName": "collectionTime",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -46,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22b6dc680fc915808fc2740fa287c756')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2f16cb237413d3e7376b86f202865e3')"
     ]
   }
 }

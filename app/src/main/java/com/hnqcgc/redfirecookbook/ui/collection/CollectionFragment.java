@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hnqcgc.redfirecookbook.R;
 
+import java.util.Collections;
+
 public class CollectionFragment extends Fragment {
 
     private CollectionViewModel viewModel;
@@ -49,6 +51,7 @@ public class CollectionFragment extends Fragment {
         setCollectionRecipeRecycleView();
 
         viewModel.collectionsLiveData.observe(getViewLifecycleOwner(), collections -> {
+            Collections.reverse(collections);
             viewModel.collections.addAll(collections);
             adapter.notifyDataSetChanged();
         });

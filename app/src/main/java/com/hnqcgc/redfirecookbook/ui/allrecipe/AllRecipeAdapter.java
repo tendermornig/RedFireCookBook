@@ -88,6 +88,11 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     .error(R.drawable.img_load_fail)
                     .into(viewHolder.recipeImage);
             viewHolder.titleText.setText(recipeInfo.getTitle());
+            if (recipeInfo.isCollection()) {
+                viewHolder.collectionImg.setImageResource(R.drawable.collection);
+            }else {
+                viewHolder.collectionImg.setImageResource(R.drawable.not_collection);
+            }
             if (!"".equals(recipeInfo.getMessage())) {
                 viewHolder.messageText.setVisibility(View.VISIBLE);
                 viewHolder.messageText.setText(recipeInfo.getMessage());

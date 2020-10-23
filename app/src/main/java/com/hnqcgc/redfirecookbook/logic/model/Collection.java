@@ -1,5 +1,6 @@
 package com.hnqcgc.redfirecookbook.logic.model;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class Collection {
 
     @PrimaryKey
+    @ColumnInfo(name = "recipeId")
     private long recipeId;
 
     private String title;
@@ -14,6 +16,8 @@ public class Collection {
     private String img;
 
     private String material;
+
+    private long collectionTime;
 
     public long getRecipeId() {
         return recipeId;
@@ -47,4 +51,11 @@ public class Collection {
         this.material = material;
     }
 
+    public long getCollectionTime() {
+        return collectionTime;
+    }
+
+    public void setCollectionTime(long collectionTime) {
+        this.collectionTime = collectionTime;
+    }
 }

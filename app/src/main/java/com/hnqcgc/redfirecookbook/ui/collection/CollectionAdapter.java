@@ -15,7 +15,10 @@ import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.ui.recipe.RecipeActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
 
@@ -23,9 +26,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     private final List<Collection> collections;
 
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日收藏", Locale.getDefault());
+
+
     public CollectionAdapter(Context context, List<Collection> collections) {
         this.context = context;
         this.collections = collections;
+        format.setTimeZone(TimeZone.getTimeZone("Etc/GMT-8"));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -34,7 +41,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
         private final TextView collectionRecipeName;
 
-        private final TextView collectionRecipeCategory;
+        private final TextView collectionTime;
 
         private final TextView collectionRecipeMaterial;
 
@@ -42,7 +49,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             super(itemView);
             collectionRecipeImage = itemView.findViewById(R.id.collectionRecipeImage);
             collectionRecipeName = itemView.findViewById(R.id.collectionRecipeName);
-            collectionRecipeCategory = itemView.findViewById(R.id.collectionRecipeCategory);
+            collectionTime = itemView.findViewById(R.id.collectionTime);
             collectionRecipeMaterial = itemView.findViewById(R.id.collectionRecipeMaterial);
         }
     }
@@ -66,6 +73,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
                 .load(collection.getImg())
                 .into(holder.collectionRecipeImage);
         holder.collectionRecipeName.setText(collection.getTitle());
+        holder.collectionTime.setText(format.format(collection.getCollectionTime()));
         holder.collectionRecipeMaterial.setText(collection.getMaterial());
     }
 
