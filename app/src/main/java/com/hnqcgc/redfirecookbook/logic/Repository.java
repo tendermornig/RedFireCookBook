@@ -95,6 +95,10 @@ public class Repository {
         return RedFireCookBookDB.getInstance().loadAllCollectionRecipeId();
     }
 
+    public LiveData<List<Collection>> searchCollection(String title){
+        return RedFireCookBookDB.getInstance().searchCollection(title);
+    }
+
     public LiveData<List<Long>> isCollection(long recipeId) {
         return RedFireCookBookDB.getInstance().isCollection(recipeId);
     }

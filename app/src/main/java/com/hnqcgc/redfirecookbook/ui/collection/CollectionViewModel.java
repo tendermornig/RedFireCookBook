@@ -13,15 +13,24 @@ import java.util.List;
 
 public class CollectionViewModel extends ViewModel {
 
-    private final MutableLiveData<Object> searchRecipeNameLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Object> loadAllRecipeLiveData = new MutableLiveData<>();
+
+    private final MutableLiveData<String> searchRecipeNameLiveData = new MutableLiveData<>();
 
     public List<Collection> collections = new ArrayList<>();
 
-    public final LiveData<List<Collection>> collectionsLiveData = Transformations.switchMap(searchRecipeNameLiveData,
+    public final LiveData<List<Collection>> allCollectionLiveData = Transformations.switchMap(loadAllRecipeLiveData,
             input -> Repository.getInstance().loadAllCollection());
 
+    public final LiveData<List<Collection>> searchCollectionLiveData = Transformations.switchMap(searchRecipeNameLiveData,
+            input -> Repository.getInstance().searchCollection(input));
+
     public void loadAllCollection() {
-        searchRecipeNameLiveData.setValue(searchRecipeNameLiveData.getValue());
+        loadAllRecipeLiveData.setValue(loadAllRecipeLiveData.getValue());
+    }
+
+    public void searchRecipeName(String name) {
+        searchRecipeNameLiveData.setValue(name);
     }
 
     public void deleteCollectionById(long id) {

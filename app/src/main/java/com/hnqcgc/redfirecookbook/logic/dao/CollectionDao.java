@@ -23,7 +23,7 @@ public interface CollectionDao {
     LiveData<List<Long>> loadAllCollectionRecipeId();
 
     @Query("select * from Collection where title like :title")
-    List<Collection> searchCollection(String title);
+    LiveData<List<Collection>> searchCollection(String title);
 
     @Query("select recipeId from Collection where recipeId = :recipeId limit 1")
     LiveData<List<Long>> isCollection(long recipeId);

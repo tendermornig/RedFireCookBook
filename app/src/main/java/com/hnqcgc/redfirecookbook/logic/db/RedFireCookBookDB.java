@@ -34,6 +34,10 @@ public class RedFireCookBookDB {
         return collectionDao.loadAllCollectionRecipeId();
     }
 
+    public LiveData<List<Collection>> searchCollection(String title){
+        return collectionDao.searchCollection("%" + title + "%");
+    }
+
     public LiveData<List<Long>> isCollection(long recipeId) {
         return collectionDao.isCollection(recipeId);
     }

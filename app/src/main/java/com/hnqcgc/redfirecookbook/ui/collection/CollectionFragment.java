@@ -1,6 +1,8 @@
 package com.hnqcgc.redfirecookbook.ui.collection;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.logic.model.Collection;
 
 import java.util.Collections;
+import java.util.List;
 
 public class CollectionFragment extends Fragment {
 
@@ -39,6 +43,28 @@ public class CollectionFragment extends Fragment {
     private void initView(View view) {
         searchRecipeEdit = view.findViewById(R.id.searchRecipeEdit);
         collectionRecycleView = view.findViewById(R.id.collectionRecycleView);
+
+        searchRecipeEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String name = s.toString();
+                if (!name.isEmpty()) {
+                    viewModel.searchRecipeName(name);
+                }else {
+                    viewModel.loadAllCollection();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -50,13 +76,21 @@ public class CollectionFragment extends Fragment {
 
         setCollectionRecipeRecycleView();
 
-        viewModel.collectionsLiveData.observe(getViewLifecycleOwner(), collections -> {
-            Collections.reverse(collections);
-            viewModel.collections.clear();
-            viewModel.collections.addAll(collections);
-            adapter.notifyDataSetChanged();
-        });
+        setCollectionViewModel();
 
+    }
+
+    private void setCollectionViewModel() {
+        viewModel.allCollectionLiveData.observe(getViewLifecycleOwner(), this::dataChange);
+
+        viewModel.searchCollectionLiveData.observe(getViewLifecycleOwner(), this::dataChange);
+    }
+
+    private void dataChange(List<Collection> collections) {
+        Collections.reverse(collections);
+        viewModel.collections.clear();
+        viewModel.collections.addAll(collections);
+        adapter.notifyDataSetChanged();
     }
 
     private void setCollectionRecipeRecycleView() {
