@@ -2,6 +2,7 @@ package com.hnqcgc.redfirecookbook.ui.recipe;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -55,6 +56,12 @@ public class RecipeActivity extends AppCompatActivity {
 
     private FloatingActionButton collectionFloatBtn;
 
+    private IsCollection COLLECTION_TYPE;
+
+    enum IsCollection {
+        COLLECTION,
+        NOT_COLLECTION
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,38 +76,52 @@ public class RecipeActivity extends AppCompatActivity {
     private void initViewModel() {
         viewModel.recipeDetailsLiveData.observe(this, recipeDetails -> {
             if (recipeDetails != null) {
-                recipeTitle.setText(recipeDetails.getTitle());
-                Glide.with(this)
-                        .load(recipeDetails.getImg())
-                        .into(recipeImg);
-                List<String> infoList = recipeDetails.getInfo().get(0).asList();
-                List<Material> materials = recipeDetails.getMaterials();
-                List<StepWork> stepWorks = recipeDetails.getStepWorks();
-                RecipeAdapter adapter = new RecipeAdapter(this, infoList, materials, stepWorks);
-                recipeBody.setAdapter(adapter);
-
+                setView(recipeDetails);
                 collectionFloatBtn.setOnClickListener(v -> {
                     RecipeDetails details = viewModel.recipeDetailsLiveData.getValue();
-                    Collection collection = new Collection();
-                    collection.setRecipeId(details.getRecipeId());
-                    collection.setTitle(details.getTitle());
-                    collection.setImg(details.getImg());
-                    collection.setMaterial(details.toMaterialString());
-                    collection.setCollectionTime(new Date().getTime());
-                    viewModel.insertCollection(collection);
+                    if (COLLECTION_TYPE == IsCollection.NOT_COLLECTION) {
+                        Collection collection = new Collection();
+                        collection.setRecipeId(details.getRecipeId());
+                        collection.setTitle(details.getTitle());
+                        collection.setImg(details.getImg());
+                        collection.setMaterial(details.toMaterialString());
+                        collection.setCollectionTime(new Date().getTime());
+                        viewModel.insertCollection(collection);
+                        changeCollection(IsCollection.COLLECTION, R.drawable.collection);
+                    }else {
+                        viewModel.deleteCollectionById(details.getRecipeId());
+                        changeCollection(IsCollection.NOT_COLLECTION, R.drawable.not_collection);
+                    }
                 });
-
             }else {
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
             }
         });
-        viewModel.insertReturnLiveData.observe(this, aLong -> {
-            if (aLong > 0) {
-                Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+        viewModel.isCollectionLiveData.observe(this, longs -> {
+            if (longs.size() > 0) {
+                changeCollection(IsCollection.COLLECTION, R.drawable.collection);
             }else {
-                Toast.makeText(this, "已经收藏过了", Toast.LENGTH_SHORT).show();
+                changeCollection(IsCollection.NOT_COLLECTION, R.drawable.not_collection);
             }
         });
+    }
+
+    private void changeCollection(IsCollection type, int icon) {
+        COLLECTION_TYPE = type;
+        collectionFloatBtn.setImageResource(icon);
+        collectionFloatBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+    }
+
+    private void setView(RecipeDetails recipeDetails) {
+        recipeTitle.setText(recipeDetails.getTitle());
+        Glide.with(this)
+                .load(recipeDetails.getImg())
+                .into(recipeImg);
+        List<String> infoList = recipeDetails.getInfo().get(0).asList();
+        List<Material> materials = recipeDetails.getMaterials();
+        List<StepWork> stepWorks = recipeDetails.getStepWorks();
+        RecipeAdapter adapter = new RecipeAdapter(this, infoList, materials, stepWorks);
+        recipeBody.setAdapter(adapter);
     }
 
     private void getRecipeId() {
@@ -158,6 +179,8 @@ public class RecipeActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recipeBody.setLayoutManager(manager);
+
+
 
     }
 

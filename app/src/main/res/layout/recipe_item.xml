@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_collection"
                 android:id="@+id/collectionImg"
+                app:tint="@color/red_a400"
                 android:layout_marginEnd="8dp"
                 android:layout_gravity="center_vertical"/>
 

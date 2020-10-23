@@ -24,4 +24,8 @@ public class CollectionViewModel extends ViewModel {
         searchRecipeNameLiveData.setValue(searchRecipeNameLiveData.getValue());
     }
 
+    public void deleteCollectionById(long id) {
+        Repository.getInstance().deleteCollectionById(id);
+    }
+
 }

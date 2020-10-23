@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class CollectionFragment extends Fragment {
 
-    private CollectionViewModel viewModel;
+    public CollectionViewModel viewModel;
 
     private EditText searchRecipeEdit;
 
@@ -52,6 +52,7 @@ public class CollectionFragment extends Fragment {
 
         viewModel.collectionsLiveData.observe(getViewLifecycleOwner(), collections -> {
             Collections.reverse(collections);
+            viewModel.collections.clear();
             viewModel.collections.addAll(collections);
             adapter.notifyDataSetChanged();
         });
@@ -61,7 +62,7 @@ public class CollectionFragment extends Fragment {
     private void setCollectionRecipeRecycleView() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         collectionRecycleView.setLayoutManager(manager);
-        adapter = new CollectionAdapter(getContext(), viewModel.collections);
+        adapter = new CollectionAdapter(this, viewModel.collections);
         collectionRecycleView.setAdapter(adapter);
     }
 

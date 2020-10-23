@@ -22,8 +22,8 @@ public class RedFireCookBookDB {
         return redFireCookBookDB;
     }
 
-    public long insertCollection(Collection collection) {
-        return collectionDao.insertCollection(collection);
+    public void insertCollection(Collection collection) {
+        collectionDao.insertCollection(collection);
     }
 
     public LiveData<List<Collection>> loadAllCollection() {
@@ -32,6 +32,10 @@ public class RedFireCookBookDB {
 
     public LiveData<List<Long>> loadAllCollectionRecipeId() {
         return collectionDao.loadAllCollectionRecipeId();
+    }
+
+    public LiveData<List<Long>> isCollection(long recipeId) {
+        return collectionDao.isCollection(recipeId);
     }
 
     public int deleteCollectionById(long id) {

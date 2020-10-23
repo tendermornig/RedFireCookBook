@@ -83,11 +83,8 @@ public class Repository {
         return RecipeCountDao.getInstance().getRecipeCount();
     }
 
-    public MutableLiveData<Long> insertCollection(Collection collection) {
-        MutableLiveData<Long> insertReturnLiveData = new MutableLiveData<>();
-        AppExecutors.getMIOExecutor().execute(() -> insertReturnLiveData.postValue(
-                RedFireCookBookDB.getInstance().insertCollection(collection)));
-        return insertReturnLiveData;
+    public void insertCollection(Collection collection) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().insertCollection(collection));
     }
 
     public LiveData<List<Collection>> loadAllCollection() {
@@ -98,8 +95,12 @@ public class Repository {
         return RedFireCookBookDB.getInstance().loadAllCollectionRecipeId();
     }
 
-    public int deleteCollectionById(long id) {
-        return RedFireCookBookDB.getInstance().deleteCollectionById(id);
+    public LiveData<List<Long>> isCollection(long recipeId) {
+        return RedFireCookBookDB.getInstance().isCollection(recipeId);
+    }
+
+    public void deleteCollectionById(long id) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().deleteCollectionById(id));
     }
 
 }
