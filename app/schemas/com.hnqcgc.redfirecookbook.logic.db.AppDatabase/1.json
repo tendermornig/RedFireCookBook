@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7d6b8acb8f5392ef06afdc94fc0750d6",
+    "identityHash": "22b6dc680fc915808fc2740fa287c756",
     "entities": [
       {
         "tableName": "Collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `title` TEXT, `message` TEXT, `gredient` TEXT, `cover` TEXT, `category` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recipeId` INTEGER NOT NULL, `title` TEXT, `img` TEXT, `material` TEXT, PRIMARY KEY(`recipeId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "recipeId",
             "columnName": "recipeId",
@@ -27,35 +21,23 @@
             "notNull": false
           },
           {
-            "fieldPath": "message",
-            "columnName": "message",
+            "fieldPath": "img",
+            "columnName": "img",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "gredient",
-            "columnName": "gredient",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "cover",
-            "columnName": "cover",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "category",
-            "columnName": "category",
+            "fieldPath": "material",
+            "columnName": "material",
             "affinity": "TEXT",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recipeId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -64,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d6b8acb8f5392ef06afdc94fc0750d6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22b6dc680fc915808fc2740fa287c756')"
     ]
   }
 }

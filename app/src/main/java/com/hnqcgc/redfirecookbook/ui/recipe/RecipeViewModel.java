@@ -11,17 +11,22 @@ import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 
 public class RecipeViewModel extends ViewModel {
 
-    private final MutableLiveData<Integer> queryRecipeIdLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Long> queryRecipeIdLiveData = new MutableLiveData<>();
+
+    private final MutableLiveData<Collection> collectionMutableLiveData = new MutableLiveData<>();
 
     public LiveData<RecipeDetails> recipeDetailsLiveData = Transformations.switchMap(queryRecipeIdLiveData,
             input -> Repository.getInstance().searchRecipe(input));
 
-    public void searchRecipe(int recipeId) {
+    public LiveData<Long> insertReturnLiveData = Transformations.switchMap(
+            collectionMutableLiveData, input -> Repository.getInstance().insertCollection(input));
+
+    public void searchRecipe(long recipeId) {
         queryRecipeIdLiveData.setValue(recipeId);
     }
 
-    public long insertCollection(Collection collection) {
-        return Repository.getInstance().insertCollection(collection);
+    public void insertCollection(Collection collection) {
+        collectionMutableLiveData.setValue(collection);
     }
 
 }

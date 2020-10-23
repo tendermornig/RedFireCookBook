@@ -1,5 +1,7 @@
 package com.hnqcgc.redfirecookbook.logic.db;
 
+import androidx.lifecycle.LiveData;
+
 import com.hnqcgc.redfirecookbook.logic.dao.CollectionDao;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
 
@@ -24,11 +26,11 @@ public class RedFireCookBookDB {
         return collectionDao.insertCollection(collection);
     }
 
-    public List<Collection> loadAllCollection() {
+    public LiveData<List<Collection>> loadAllCollection() {
         return collectionDao.loadAllCollection();
     }
 
-    public long deleteCollectionById(long id) {
+    public int deleteCollectionById(long id) {
         return collectionDao.deleteCollectionById(id);
     }
 

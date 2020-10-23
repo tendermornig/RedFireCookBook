@@ -67,7 +67,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             NormalViewHolder holder = new NormalViewHolder(view);
             holder.itemView.setOnClickListener(v -> {
                 int position = holder.getAdapterPosition();
-                int recipeId = infoList.get(position).getRecipeId();
+                long recipeId = infoList.get(position).getRecipeId();
                 RecipeActivity.startRecipeActivity(parent.getContext(), recipeId);
             });
             return holder;

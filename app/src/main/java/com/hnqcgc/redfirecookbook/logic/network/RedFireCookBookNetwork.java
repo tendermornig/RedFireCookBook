@@ -27,7 +27,7 @@ public class RedFireCookBookNetwork {
         return service.searchAllRecipe(10, offset);
     }
 
-    public Call<RecipeDetails> searchRecipe(int recipeId) {
+    public Call<RecipeDetails> searchRecipe(long recipeId) {
         return service.searchRecipe(recipeId);
     }
 

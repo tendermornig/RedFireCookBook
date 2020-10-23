@@ -22,7 +22,9 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
+import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.Material;
+import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.StepWork;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
 
@@ -79,10 +81,17 @@ public class RecipeActivity extends AppCompatActivity {
                 LogUtil.getInstance().d(TAG, "recipeDetails is null");
             }
         });
+        viewModel.insertReturnLiveData.observe(this, aLong -> {
+            if (aLong > 0) {
+                Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(this, "已经收藏过了", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getRecipeId() {
-        int recipeId = getIntent().getIntExtra("recipeId", -1);
+        long recipeId = getIntent().getLongExtra("recipeId", -1);
         if (recipeId != -1)
             viewModel.searchRecipe(recipeId);
         else {
@@ -138,11 +147,17 @@ public class RecipeActivity extends AppCompatActivity {
         recipeBody.setLayoutManager(manager);
 
         collectionFloatBtn.setOnClickListener(v -> {
-            //viewModel.insertCollection();
+            RecipeDetails recipeDetails = viewModel.recipeDetailsLiveData.getValue();
+            Collection collection = new Collection();
+            collection.setRecipeId(recipeDetails.getRecipeId());
+            collection.setTitle(recipeDetails.getTitle());
+            collection.setImg(recipeDetails.getImg());
+            collection.setMaterial(recipeDetails.toMaterialString());
+            viewModel.insertCollection(collection);
         });
     }
 
-    public static void startRecipeActivity(Context context, int recipeId) {
+    public static void startRecipeActivity(Context context, long recipeId) {
         Intent intent = new Intent(context, RecipeActivity.class);
         intent.putExtra("recipeId", recipeId);
         context.startActivity(intent);

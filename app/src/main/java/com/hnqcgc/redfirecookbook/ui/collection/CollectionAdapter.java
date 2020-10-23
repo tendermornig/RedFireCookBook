@@ -52,9 +52,10 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public CollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
-        int recipeId = collections.get(holder.getAdapterPosition()).getRecipeId();
-        holder.itemView.setOnClickListener(v -> RecipeActivity.startRecipeActivity(
-                context, recipeId));
+        holder.itemView.setOnClickListener(v -> {
+            long recipeId = collections.get(holder.getAdapterPosition()).getRecipeId();
+            RecipeActivity.startRecipeActivity(context, recipeId);
+        });
         return holder;
     }
 
@@ -62,11 +63,10 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public void onBindViewHolder(@NonNull CollectionAdapter.ViewHolder holder, int position) {
         Collection collection = collections.get(holder.getAdapterPosition());
         Glide.with(context)
-                .load(collection.getCover())
+                .load(collection.getImg())
                 .into(holder.collectionRecipeImage);
         holder.collectionRecipeName.setText(collection.getTitle());
-        holder.collectionRecipeCategory.setText(collection.getCategory());
-        holder.collectionRecipeMaterial.setText(collection.getGredient());
+        holder.collectionRecipeMaterial.setText(collection.getMaterial());
     }
 
     @Override

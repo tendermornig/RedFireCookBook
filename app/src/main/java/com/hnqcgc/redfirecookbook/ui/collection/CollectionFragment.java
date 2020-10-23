@@ -48,6 +48,11 @@ public class CollectionFragment extends Fragment {
 
         setCollectionRecipeRecycleView();
 
+        viewModel.collectionsLiveData.observe(getViewLifecycleOwner(), collections -> {
+            viewModel.collections.addAll(collections);
+            adapter.notifyDataSetChanged();
+        });
+
     }
 
     private void setCollectionRecipeRecycleView() {

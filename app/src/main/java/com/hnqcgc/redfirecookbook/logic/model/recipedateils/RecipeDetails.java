@@ -32,7 +32,7 @@ public class RecipeDetails {
         this.img = img;
     }
 
-    public long getRecipeId() {
+    public int getRecipeId() {
         return recipeId;
     }
 
@@ -78,6 +78,14 @@ public class RecipeDetails {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String toMaterialString() {
+        StringBuilder buffer = new StringBuilder();
+        for (Material material : materials) {
+            buffer.append("、").append(material.getName());
+        }
+        return buffer.toString().substring(1);
     }
 
 }

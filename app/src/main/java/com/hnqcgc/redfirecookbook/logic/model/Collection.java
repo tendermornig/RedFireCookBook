@@ -6,34 +6,20 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Collection {
 
-    @PrimaryKey(autoGenerate = true)
-    private long id;
-
-    private int recipeId;
+    @PrimaryKey
+    private long recipeId;
 
     private String title;
 
-    private String message;
+    private String img;
 
-    private String gredient;
+    private String material;
 
-    private String cover;
-
-    private String category;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getRecipeId() {
+    public long getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(int recipeId) {
+    public void setRecipeId(long recipeId) {
         this.recipeId = recipeId;
     }
 
@@ -45,36 +31,20 @@ public class Collection {
         this.title = title;
     }
 
-    public String getMessage() {
-        return message;
+    public String getImg() {
+        return img;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setImg(String img) {
+        this.img = img;
     }
 
-    public String getGredient() {
-        return gredient;
+    public String getMaterial() {
+        return material;
     }
 
-    public void setGredient(String gredient) {
-        this.gredient = gredient;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setMaterial(String material) {
+        this.material = material;
     }
 
 }

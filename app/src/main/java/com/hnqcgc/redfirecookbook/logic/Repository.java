@@ -3,6 +3,7 @@ package com.hnqcgc.redfirecookbook.logic;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
@@ -12,8 +13,8 @@ import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
+import com.hnqcgc.redfirecookbook.util.AppExecutors;
 import com.hnqcgc.redfirecookbook.util.LogUtil;
-
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class Repository {
         return recipeLiveData;
     }
 
-    public MutableLiveData<RecipeDetails> searchRecipe(int recipeId) {
+    public MutableLiveData<RecipeDetails> searchRecipe(long recipeId) {
         MutableLiveData<RecipeDetails> recipeDetailsLiveData = new MutableLiveData<>();
         Call<RecipeDetails> call = RedFireCookBookNetwork.getInstance().searchRecipe(recipeId);
         call.enqueue(new Callback<RecipeDetails>() {
@@ -82,17 +83,18 @@ public class Repository {
         return RecipeCountDao.getInstance().getRecipeCount();
     }
 
-    public long insertCollection(Collection collection) {
-        return RedFireCookBookDB.getInstance().insertCollection(collection);
+    public MutableLiveData<Long> insertCollection(Collection collection) {
+        MutableLiveData<Long> insertReturnLiveData = new MutableLiveData<>();
+        AppExecutors.getMIOExecutor().execute(() -> insertReturnLiveData.postValue(
+                RedFireCookBookDB.getInstance().insertCollection(collection)));
+        return insertReturnLiveData;
     }
 
-    public MutableLiveData<List<Collection>> loadAllCollection() {
-        MutableLiveData<List<Collection>> collectionsLiveData = new MutableLiveData<>();
-        collectionsLiveData.setValue(RedFireCookBookDB.getInstance().loadAllCollection());
-        return collectionsLiveData;
+    public LiveData<List<Collection>> loadAllCollection() {
+        return RedFireCookBookDB.getInstance().loadAllCollection();
     }
 
-    public long deleteCollectionById(long id) {
+    public int deleteCollectionById(long id) {
         return RedFireCookBookDB.getInstance().deleteCollectionById(id);
     }
 
