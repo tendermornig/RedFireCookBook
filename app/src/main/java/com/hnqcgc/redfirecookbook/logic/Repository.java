@@ -103,8 +103,8 @@ public class Repository {
         return RedFireCookBookDB.getInstance().isCollection(recipeId);
     }
 
-    public void deleteCollectionById(long id) {
-        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().deleteCollectionById(id));
+    public void deleteCollectionById(long recipeId) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().deleteCollectionById(recipeId));
     }
 
 }

@@ -42,8 +42,8 @@ public class RedFireCookBookDB {
         return collectionDao.isCollection(recipeId);
     }
 
-    public int deleteCollectionById(long id) {
-        return collectionDao.deleteCollectionById(id);
+    public int deleteCollectionById(long recipeId) {
+        return collectionDao.deleteCollectionById(recipeId);
     }
 
 }

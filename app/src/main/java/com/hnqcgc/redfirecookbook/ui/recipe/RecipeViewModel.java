@@ -33,8 +33,8 @@ public class RecipeViewModel extends ViewModel {
         Repository.getInstance().insertCollection(collection);
     }
 
-    public void deleteCollectionById(long id) {
-        Repository.getInstance().deleteCollectionById(id);
+    public void deleteCollectionById(long recipeId) {
+        Repository.getInstance().deleteCollectionById(recipeId);
     }
 
 }

@@ -69,7 +69,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         });
         holder.deleteCollectionBtn.setOnClickListener(
                 v -> Snackbar.make(
-                        v, "确定要删除删除吗！", Snackbar.LENGTH_SHORT)
+                        v, "确定要删除吗！", Snackbar.LENGTH_SHORT)
                 .setAction("确定", v1 -> {
                     long recipeId = collections.get(holder.getAdapterPosition()).getRecipeId();
                     fragment.viewModel.deleteCollectionById(recipeId);

@@ -33,8 +33,8 @@ public class CollectionViewModel extends ViewModel {
         searchRecipeNameLiveData.setValue(name);
     }
 
-    public void deleteCollectionById(long id) {
-        Repository.getInstance().deleteCollectionById(id);
+    public void deleteCollectionById(long recipeId) {
+        Repository.getInstance().deleteCollectionById(recipeId);
     }
 
 }

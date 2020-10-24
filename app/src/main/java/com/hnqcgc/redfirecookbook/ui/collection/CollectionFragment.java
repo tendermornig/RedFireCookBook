@@ -23,9 +23,9 @@ import java.util.List;
 
 public class CollectionFragment extends Fragment {
 
-    public CollectionViewModel viewModel;
+    private static final String TAG = "CollectionFragment";
 
-    private EditText searchRecipeEdit;
+    public CollectionViewModel viewModel;
 
     private RecyclerView collectionRecycleView;
 
@@ -41,8 +41,8 @@ public class CollectionFragment extends Fragment {
     }
 
     private void initView(View view) {
-        searchRecipeEdit = view.findViewById(R.id.searchRecipeEdit);
         collectionRecycleView = view.findViewById(R.id.collectionRecycleView);
+        EditText searchRecipeEdit = view.findViewById(R.id.searchRecipeEdit);
 
         searchRecipeEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,7 +82,6 @@ public class CollectionFragment extends Fragment {
 
     private void setCollectionViewModel() {
         viewModel.allCollectionLiveData.observe(getViewLifecycleOwner(), this::dataChange);
-
         viewModel.searchCollectionLiveData.observe(getViewLifecycleOwner(), this::dataChange);
     }
 
