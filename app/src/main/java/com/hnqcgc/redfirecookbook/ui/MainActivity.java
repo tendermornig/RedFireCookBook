@@ -1,9 +1,4 @@
-package com.hnqcgc.redfirecookbook;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+package com.hnqcgc.redfirecookbook.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hnqcgc.redfirecookbook.R;
 
 public class MainActivity extends AppCompatActivity {
 

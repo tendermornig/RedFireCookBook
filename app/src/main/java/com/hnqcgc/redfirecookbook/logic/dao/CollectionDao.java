@@ -29,6 +29,6 @@ public interface CollectionDao {
     LiveData<List<Long>> isCollection(long recipeId);
 
     @Query("delete from Collection where recipeId = :recipeId")
-    int deleteCollectionById(long recipeId);
+    void deleteCollectionById(long recipeId);
 
 }

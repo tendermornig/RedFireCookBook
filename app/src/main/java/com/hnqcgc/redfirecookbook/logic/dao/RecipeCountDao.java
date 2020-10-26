@@ -31,4 +31,5 @@ public class RecipeCountDao {
     private SharedPreferences sharedPreferences() {
         return RedFireCookBookApplication.getContext().getSharedPreferences("all_recipe", Context.MODE_PRIVATE);
     }
+
 }

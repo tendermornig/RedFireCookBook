@@ -1,10 +1,11 @@
 package com.hnqcgc.redfirecookbook.ui.weicome;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import com.hnqcgc.redfirecookbook.MainActivity;
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.ui.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
