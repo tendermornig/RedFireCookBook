@@ -16,7 +16,7 @@ public interface CollectionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertCollection(Collection collection);
 
-    @Query("select * from Collection ORDER BY collectionTime ASC")
+    @Query("select * from Collection order by collectionTime asc")
     LiveData<List<Collection>> loadAllCollection();
 
     @Query("select recipeId from Collection")
@@ -25,7 +25,7 @@ public interface CollectionDao {
     @Query("select * from Collection where title like :title")
     LiveData<List<Collection>> searchCollection(String title);
 
-    @Query("select recipeId from Collection where recipeId = :recipeId limit 1")
+    @Query("select recipeId from Collection where  recipeId = :recipeId limit 1")
     LiveData<List<Long>> isCollection(long recipeId);
 
     @Query("delete from Collection where recipeId = :recipeId")
