@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c2f16cb237413d3e7376b86f202865e3",
+    "identityHash": "54a84dc5eb39b8f1e26673c377ca56ae",
     "entities": [
       {
         "tableName": "Collection",
@@ -47,12 +47,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "KitchenDiary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`imageUri` TEXT, `title` TEXT, `content` TEXT, `lastWriteTime` INTEGER NOT NULL, PRIMARY KEY(`lastWriteTime`))",
+        "fields": [
+          {
+            "fieldPath": "imageUri",
+            "columnName": "imageUri",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastWriteTime",
+            "columnName": "lastWriteTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "lastWriteTime"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c2f16cb237413d3e7376b86f202865e3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54a84dc5eb39b8f1e26673c377ca56ae')"
     ]
   }
 }

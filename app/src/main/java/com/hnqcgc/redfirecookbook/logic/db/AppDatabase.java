@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.dao.CollectionDao;
+import com.hnqcgc.redfirecookbook.logic.dao.KitchenDiaryDao;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
 
@@ -14,7 +15,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     abstract CollectionDao collectionDao();
 
-    abstract KitchenDiary kitchenDiaryDao();
+    abstract KitchenDiaryDao kitchenDiaryDao();
 
     private static AppDatabase instance = null;
 
