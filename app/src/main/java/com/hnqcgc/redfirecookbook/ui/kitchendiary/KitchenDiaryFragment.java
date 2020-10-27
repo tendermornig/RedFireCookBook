@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.ui.adddiary.EditDiaryActivity;
 
 public class KitchenDiaryFragment extends Fragment {
 
@@ -32,7 +33,7 @@ public class KitchenDiaryFragment extends Fragment {
         addDiaryBtn = view.findViewById(R.id.addDiaryBtn);
 
         addDiaryBtn.setOnClickListener(v -> {
-
+            EditDiaryActivity.startAddDiaryActivity(getContext());
         });
     }
 
