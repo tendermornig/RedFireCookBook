@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "54a84dc5eb39b8f1e26673c377ca56ae",
+    "identityHash": "8786c901d44f756a71a6a13e4bc32210",
     "entities": [
       {
         "tableName": "Collection",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "KitchenDiary",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`imageUri` TEXT, `title` TEXT, `content` TEXT, `lastWriteTime` INTEGER NOT NULL, PRIMARY KEY(`lastWriteTime`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`imageUri` TEXT, `title` TEXT, `content` TEXT, `lastWriteDate` INTEGER NOT NULL, PRIMARY KEY(`lastWriteDate`))",
         "fields": [
           {
             "fieldPath": "imageUri",
@@ -71,15 +71,15 @@
             "notNull": false
           },
           {
-            "fieldPath": "lastWriteTime",
-            "columnName": "lastWriteTime",
+            "fieldPath": "lastWriteDate",
+            "columnName": "lastWriteDate",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "lastWriteTime"
+            "lastWriteDate"
           ],
           "autoGenerate": false
         },
@@ -90,7 +90,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54a84dc5eb39b8f1e26673c377ca56ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8786c901d44f756a71a6a13e4bc32210')"
     ]
   }
 }

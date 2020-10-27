@@ -19,7 +19,7 @@ public interface KitchenDiaryDao {
     @Update
     void updateKitchenDiary(KitchenDiary kitchenDiary);
 
-    @Query("select * from KitchenDiary order by lastWriteTime asc")
+    @Query("select * from KitchenDiary order by lastWriteDate asc")
     LiveData<List<KitchenDiary>> loadAllKitchenDiary();
 
 }

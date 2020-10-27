@@ -65,6 +65,18 @@ public class CollectionFragment extends Fragment {
 
             }
         });
+
+        searchRecipeEdit.setOnFocusChangeListener((v, hasFocus) -> {
+            EditText _v=(EditText)v;
+            if (!hasFocus) {// 失去焦点
+                _v.setHint(_v.getTag().toString());
+            } else {
+                String hint=_v.getHint().toString();
+                _v.setTag(hint);
+                _v.setHint("");
+            }
+        });
+
     }
 
     @Override

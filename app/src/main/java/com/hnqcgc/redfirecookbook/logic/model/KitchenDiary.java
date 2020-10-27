@@ -13,7 +13,7 @@ public class KitchenDiary {
     private String content;
 
     @PrimaryKey
-    private long lastWriteTime;
+    private long lastWriteDate;
 
     public String getImageUri() {
         return imageUri;
@@ -39,12 +39,12 @@ public class KitchenDiary {
         this.content = content;
     }
 
-    public long getLastWriteTime() {
-        return lastWriteTime;
+    public long getLastWriteDate() {
+        return lastWriteDate;
     }
 
-    public void setLastWriteTime(long lastWriteTime) {
-        this.lastWriteTime = lastWriteTime;
+    public void setLastWriteDate(long lastWriteTime) {
+        this.lastWriteDate = lastWriteTime;
     }
 
 }

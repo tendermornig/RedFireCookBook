@@ -4,8 +4,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey_400_alpha_100">#FFCCCCCC</color>
     <color name="grey_100_alpha_100">#FFF2F2F2</color>
+    <color name="grey_400_alpha_100">#FFCCCCCC</color>
+    <color name="grey_600_alpha_100">#FF757575</color>
     <color name="grey_800_alpha_100">#FF323232</color>
     <color name="red_a400">#FF0000</color>
 </resources>
