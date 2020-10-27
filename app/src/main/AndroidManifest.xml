@@ -12,8 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RedFireCookBook">
-        <activity android:name=".ui.recipe.RecipeActivity"
-            android:theme="@style/RecipeActivityTheme"/>
+        <activity android:name=".ui.adddiary.AddDiaryActivity"></activity>
+        <activity
+            android:name=".ui.recipe.RecipeActivity"
+            android:theme="@style/RecipeActivityTheme" />
         <activity android:name=".ui.weicome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.MainActivity" />
     </application>
 
 </manifest>
