@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">红火菜谱</string>
-    <string name="all_recipe">菜谱大全</string>
-    <string name="collection">收藏</string>
+    <string name="all_recipe_text">菜谱大全</string>
+    <string name="kitchen_diary_text">厨房日记</string>
+    <string name="collection_text">收藏</string>
     <string name="recipe_info_text">菜品信息</string>
     <string name="material_text">需要食材</string>
     <string name="step_work_text">烹饪步骤</string>

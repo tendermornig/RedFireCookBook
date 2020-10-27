@@ -4,11 +4,16 @@
     <item
         android:id="@+id/navigation_recipe"
         android:icon="@drawable/recipe"
-        android:title="@string/all_recipe" />
+        android:title="@string/all_recipe_text" />
+
+    <item
+        android:id="@+id/navigation_kitchen_diary"
+        android:icon="@drawable/kitchen_diary"
+        android:title="@string/kitchen_diary_text"/>
 
     <item
         android:id="@+id/navigation_collection"
         android:icon="@drawable/not_collection"
-        android:title="@string/collection"/>
+        android:title="@string/collection_text"/>
 
 </menu>

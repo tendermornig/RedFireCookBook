@@ -66,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:contentDescription="@string/collection"
+        android:contentDescription="@string/collection_text"
         app:backgroundTint="?attr/colorPrimary"
         app:fabSize="normal"
         app:layout_anchor="@id/recipeBody"
