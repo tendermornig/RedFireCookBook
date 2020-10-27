@@ -8,4 +8,5 @@
     <string name="step_work_text">烹饪步骤</string>
     <string name="input_search_name">搜索收藏</string>
     <string name="delete_collection">删除</string>
+    <string name="add_diary_text">添加日记</string>
 </resources>
