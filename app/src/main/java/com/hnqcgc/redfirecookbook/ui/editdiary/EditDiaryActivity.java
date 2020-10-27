@@ -1,4 +1,4 @@
-package com.hnqcgc.redfirecookbook.ui.adddiary;
+package com.hnqcgc.redfirecookbook.ui.editdiary;
 
 import android.content.Context;
 import android.content.Intent;

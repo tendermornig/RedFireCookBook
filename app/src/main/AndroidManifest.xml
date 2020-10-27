@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RedFireCookBook">
-        <activity android:name=".ui.adddiary.EditDiaryActivity"></activity>
+        <activity android:name=".ui.editdiary.EditDiaryActivity"></activity>
         <activity
             android:name=".ui.recipe.RecipeActivity"
             android:theme="@style/RecipeActivityTheme" />
