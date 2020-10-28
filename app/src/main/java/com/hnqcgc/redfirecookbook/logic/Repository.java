@@ -10,6 +10,7 @@ import com.hnqcgc.redfirecookbook.RedFireCookBookApplication;
 import com.hnqcgc.redfirecookbook.logic.dao.RecipeCountDao;
 import com.hnqcgc.redfirecookbook.logic.db.RedFireCookBookDB;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
+import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
 import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
@@ -106,5 +107,18 @@ public class Repository {
     public void deleteCollectionById(long recipeId) {
         AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().deleteCollectionById(recipeId));
     }
+
+    public void insertKitchenDiary(KitchenDiary kitchenDiary) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().insertKitchenDiary(kitchenDiary));
+    }
+
+    public void updateKitchenDiary(KitchenDiary kitchenDiary) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().updateKitchenDiary(kitchenDiary));
+    }
+
+    public LiveData<List<KitchenDiary>> loadAllKitchenDiary() {
+        return RedFireCookBookDB.getInstance().loadAllKitchenDiary();
+    }
+
 
 }

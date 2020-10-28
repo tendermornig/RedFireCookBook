@@ -24,7 +24,8 @@
                 android:src="@drawable/over"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="18dp"/>
+                android:layout_margin="18dp"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
