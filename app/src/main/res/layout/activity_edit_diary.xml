@@ -36,9 +36,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/titleEdit"
         android:background="@null"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:hint="@string/title_hint_text"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -46,8 +48,8 @@
         android:id="@+id/contentEdit"
         android:gravity="start"
         android:background="@null"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
 
 </LinearLayout>

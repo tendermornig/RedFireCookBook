@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class EditDiaryActivity extends AppCompatActivity {
     private EditText titleEdit;
 
     private EditText contentEdit;
+    private ImageView overImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     private void initView() {
         Toolbar toolBar = findViewById(R.id.toolBar);
-        ImageView overImg = findViewById(R.id.overImg);
+        overImg = findViewById(R.id.overImg);
         titleEdit = findViewById(R.id.titleEdit);
         contentEdit = findViewById(R.id.contentEdit);
         setSupportActionBar(toolBar);
@@ -75,25 +78,37 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     private void saveDiary() {
         String contentStr = contentEdit.getText().toString();
-        if (!"".equals(contentStr)) {
+        String titleStr = titleEdit.getText().toString();
+        if (!"".equals(titleStr)||!"".equals(contentStr)) {
             if (viewModel.kitchenDiary == null) {
                 viewModel.kitchenDiary = new KitchenDiary();
-                editDiary(contentStr);
+                editDiary(contentStr, titleStr);
                 viewModel.insertKitchenDiary();
             }else {
-                editDiary(contentStr);
+                editDiary(contentStr, titleStr);
                 viewModel.updateKitchenDiary();
             }
+            hideInput();
         }else {
-            Toast.makeText(this, "内容不可未空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "日记不可未空", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void editDiary(String contentStr) {
-        String titleStr = titleEdit.getText().toString();
+    private void editDiary(String contentStr, String titleStr) {
         viewModel.kitchenDiary.setTitle(titleStr);
         viewModel.kitchenDiary.setContent(contentStr);
         viewModel.kitchenDiary.setLastWriteDate(new Date().getTime());
+    }
+
+    private void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        overImg.setVisibility(View.GONE);
+        titleEdit.clearFocus();
+        contentEdit.clearFocus();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
     public static void startAddDiaryActivity(Context context) {

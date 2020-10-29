@@ -6,14 +6,24 @@ import androidx.room.PrimaryKey;
 @Entity
 public class KitchenDiary {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
     private String imageUri;
 
     private String title;
 
     private String content;
 
-    @PrimaryKey
     private long lastWriteDate;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getImageUri() {
         return imageUri;
