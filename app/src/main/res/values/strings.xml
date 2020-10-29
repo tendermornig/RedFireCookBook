@@ -6,7 +6,7 @@
     <string name="recipe_info_text">菜品信息</string>
     <string name="material_text">需要食材</string>
     <string name="step_work_text">烹饪步骤</string>
-    <string name="input_search_name">搜索收藏</string>
+    <string name="input_search_name">输入搜索信息</string>
     <string name="delete_collection">删除</string>
     <string name="add_diary_text">添加日记</string>
     <string name="title_hint_text">标题</string>

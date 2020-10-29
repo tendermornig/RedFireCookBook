@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
+import com.hnqcgc.redfirecookbook.ui.editdiary.EditDiaryActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -46,7 +47,11 @@ public class KitchenDiaryAdapter extends RecyclerView.Adapter<KitchenDiaryAdapte
     @Override
     public KitchenDiaryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.diary_item, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        holder.itemView.setOnClickListener(v ->
+            EditDiaryActivity.startAddDiaryActivity(
+                    parent.getContext(), allKitchenDiary.get(holder.getAdapterPosition())));
+        return holder;
     }
 
     @Override

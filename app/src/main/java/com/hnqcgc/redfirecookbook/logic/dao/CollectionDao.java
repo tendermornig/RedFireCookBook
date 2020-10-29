@@ -16,7 +16,7 @@ public interface CollectionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertCollection(Collection collection);
 
-    @Query("select * from Collection order by collectionTime asc")
+    @Query("select * from Collection order by collectionTime desc")
     LiveData<List<Collection>> loadAllCollection();
 
     @Query("select recipeId from Collection")

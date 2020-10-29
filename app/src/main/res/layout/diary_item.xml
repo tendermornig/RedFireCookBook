@@ -33,16 +33,32 @@
             android:ellipsize="end"
             android:lineSpacingExtra="12dp"
             android:lineSpacingMultiplier="1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:textSize="18sp"
             android:textColor="?android:attr/textColorPrimary"/>
 
-        <TextView
+        <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:layout_marginTop="20dp"
-            android:textSize="14sp"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/date"
+                android:textSize="14sp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/deleteDiary"
+                android:background="@drawable/delete_diary"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

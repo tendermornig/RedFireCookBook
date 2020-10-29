@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
 
@@ -31,6 +32,7 @@ public class EditDiaryActivity extends AppCompatActivity {
     private EditText titleEdit;
 
     private EditText contentEdit;
+
     private ImageView overImg;
 
     @Override
@@ -39,6 +41,17 @@ public class EditDiaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_diary);
         viewModel = new ViewModelProvider(this).get(EditDiaryViewModel.class);
         initView();
+        initDiary();
+    }
+
+    private void initDiary() {
+        Intent intent = getIntent();
+        String diary = intent.getStringExtra("diary");
+        viewModel.kitchenDiary = new Gson().fromJson(diary, KitchenDiary.class);
+        if (viewModel.kitchenDiary != null) {
+            titleEdit.setText(viewModel.kitchenDiary.getTitle());
+            contentEdit.setText(viewModel.kitchenDiary.getContent());
+        }
     }
 
     private void initView() {
@@ -90,7 +103,7 @@ public class EditDiaryActivity extends AppCompatActivity {
             }
             hideInput();
         }else {
-            Toast.makeText(this, "日记不可未空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "日记不可为空", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,6 +126,12 @@ public class EditDiaryActivity extends AppCompatActivity {
 
     public static void startAddDiaryActivity(Context context) {
         Intent intent = new Intent(context, EditDiaryActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startAddDiaryActivity(Context context, KitchenDiary diary) {
+        Intent intent = new Intent(context, EditDiaryActivity.class);
+        intent.putExtra("diary", new Gson().toJson(diary));
         context.startActivity(intent);
     }
 

@@ -98,7 +98,6 @@ public class CollectionFragment extends Fragment {
     }
 
     private void dataChange(List<Collection> collections) {
-        Collections.reverse(collections);
         viewModel.collections.clear();
         viewModel.collections.addAll(collections);
         adapter.notifyDataSetChanged();

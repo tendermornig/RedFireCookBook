@@ -2,6 +2,7 @@ package com.hnqcgc.redfirecookbook.ui.kitchendiary;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hnqcgc.redfirecookbook.R;
 import com.hnqcgc.redfirecookbook.ui.editdiary.EditDiaryActivity;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class KitchenDiaryFragment extends Fragment {
+
+    private static final String TAG = "KitchenDiaryFragment";
 
     private KitchenDiaryViewModel viewModel;
 
@@ -38,20 +44,65 @@ public class KitchenDiaryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (viewModel.allKitchenDiary.size() == 0)
             viewModel.loadAllKitchenDiary();
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
-                2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) {
+
+            private Method markItemDecorInsetsDirty = null;
+            private boolean reflectError = false;
+
+            @Override
+            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                if (markItemDecorInsetsDirty == null && !reflectError) {
+                    try {
+                        markItemDecorInsetsDirty = RecyclerView.class.getDeclaredMethod("markItemDecorInsetsDirty");
+                        markItemDecorInsetsDirty.setAccessible(true);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                        reflectError = true;
+                    }
+                }
+                // 更新条件
+                if (markItemDecorInsetsDirty != null && state.willRunSimpleAnimations()) {
+                    // noinspection TryWithIdenticalCatches
+                    try {
+                        markItemDecorInsetsDirty.invoke(diary);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+                super.onLayoutChildren(recycler, state);
+            }
+
+            @Override
+            public void requestSimpleAnimationsInNextLayout() {
+                super.requestSimpleAnimationsInNextLayout();
+                if (markItemDecorInsetsDirty != null) {
+                    // noinspection TryWithIdenticalCatches
+                    try {
+                        markItemDecorInsetsDirty.invoke(diary);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
         diary.setLayoutManager(manager);
         KitchenDiaryAdapter adapter = new KitchenDiaryAdapter(viewModel.allKitchenDiary);
         diary.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                if (parent.getChildAdapterPosition(view)%2 == 0) {
+                StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
+                if (params.getSpanIndex()%2 == 0) {
                     outRect.left = 30;
                 }else {
-                    outRect.left = 20;
+                    outRect.left = 15;
                     outRect.right = 30;
                 }
-                outRect.top = 20;
+                outRect.top = 10;
+                outRect.bottom = 10;
             }
         });
         diary.setAdapter(adapter);
