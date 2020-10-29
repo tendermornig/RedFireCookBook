@@ -1,5 +1,6 @@
 package com.hnqcgc.redfirecookbook.ui.allrecipe;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,6 +119,20 @@ public class AllRecipeFragment extends Fragment {
         allRecipeRecycleView.setLayoutManager(manager);
         adapter = new AllRecipeAdapter(getContext(), viewModel.infoList);
         allRecipeRecycleView.setAdapter(adapter);
+        allRecipeRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                StaggeredGridLayoutManager.LayoutParams params = (StaggeredGridLayoutManager.LayoutParams) view.getLayoutParams();
+                if (params.getSpanIndex()%2 == 0) {
+                    outRect.left = 30;
+                }else {
+                    outRect.left = 15;
+                    outRect.right = 30;
+                }
+                outRect.top = 10;
+                outRect.bottom = 10;
+            }
+        });
         allRecipeRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

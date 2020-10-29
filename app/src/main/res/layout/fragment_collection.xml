@@ -61,6 +61,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include layout="@layout/no_data_layout"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

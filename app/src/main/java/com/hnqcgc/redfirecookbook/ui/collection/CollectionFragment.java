@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class CollectionFragment extends Fragment {
     private RecyclerView collectionRecycleView;
 
     private CollectionAdapter adapter;
+    private RelativeLayout noDataLayout;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class CollectionFragment extends Fragment {
 
     private void initView(View view) {
         collectionRecycleView = view.findViewById(R.id.collectionRecycleView);
+        noDataLayout = view.findViewById(R.id.noDataLayout);
         EditText searchRecipeEdit = view.findViewById(R.id.searchRecipeEdit);
 
         searchRecipeEdit.addTextChangedListener(new TextWatcher() {
@@ -100,7 +103,14 @@ public class CollectionFragment extends Fragment {
     private void dataChange(List<Collection> collections) {
         viewModel.collections.clear();
         viewModel.collections.addAll(collections);
-        adapter.notifyDataSetChanged();
+        if (viewModel.collections.size() == 0) {
+            noDataLayout.setVisibility(View.VISIBLE);
+            collectionRecycleView.setVisibility(View.GONE);
+        }else {
+            noDataLayout.setVisibility(View.GONE);
+            collectionRecycleView.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setCollectionRecipeRecycleView() {

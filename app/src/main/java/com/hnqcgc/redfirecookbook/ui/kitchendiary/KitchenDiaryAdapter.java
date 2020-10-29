@@ -3,6 +3,7 @@ package com.hnqcgc.redfirecookbook.ui.kitchendiary;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,11 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class KitchenDiaryAdapter extends RecyclerView.Adapter<KitchenDiaryAdapter.ViewHolder> {
+public abstract class KitchenDiaryAdapter extends RecyclerView.Adapter<KitchenDiaryAdapter.ViewHolder> {
 
     private final List<KitchenDiary> allKitchenDiary;
 
     private final SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.getDefault());
+
+    abstract void deleteDiary(long id);
 
     public KitchenDiaryAdapter(List<KitchenDiary> allKitchenDiary) {
         this.allKitchenDiary = allKitchenDiary;
@@ -34,11 +37,14 @@ public class KitchenDiaryAdapter extends RecyclerView.Adapter<KitchenDiaryAdapte
 
         private final TextView date;
 
+        private final ImageButton deleteDiary;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             content = itemView.findViewById(R.id.content);
             date = itemView.findViewById(R.id.date);
+            deleteDiary = itemView.findViewById(R.id.deleteDiary);
         }
 
     }
@@ -51,6 +57,7 @@ public class KitchenDiaryAdapter extends RecyclerView.Adapter<KitchenDiaryAdapte
         holder.itemView.setOnClickListener(v ->
             EditDiaryActivity.startAddDiaryActivity(
                     parent.getContext(), allKitchenDiary.get(holder.getAdapterPosition())));
+        holder.deleteDiary.setOnClickListener(v1 -> deleteDiary(allKitchenDiary.get(holder.getAdapterPosition()).getId()));
         return holder;
     }
 

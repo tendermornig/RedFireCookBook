@@ -47,7 +47,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/searchRecipeEdit"
+                        android:id="@+id/searchDiaryEdit"
                         android:background="#00ffffff"
                         android:textColor="@color/grey_800_alpha_100"
                         android:hint="@string/input_search_name"
@@ -61,6 +61,8 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/no_data_layout"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

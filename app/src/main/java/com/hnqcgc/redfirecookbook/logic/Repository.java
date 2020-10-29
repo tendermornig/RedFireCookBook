@@ -112,12 +112,20 @@ public class Repository {
         AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().insertKitchenDiary(kitchenDiary));
     }
 
+    public void deleteKitchenDiaryById(long id) {
+        AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().deleteKitchenDiaryById(id));
+    }
+
     public void updateKitchenDiary(KitchenDiary kitchenDiary) {
         AppExecutors.getMIOExecutor().execute(() -> RedFireCookBookDB.getInstance().updateKitchenDiary(kitchenDiary));
     }
 
     public LiveData<List<KitchenDiary>> loadAllKitchenDiary() {
         return RedFireCookBookDB.getInstance().loadAllKitchenDiary();
+    }
+
+    public LiveData<List<KitchenDiary>> searchDiary(String searchContent) {
+        return RedFireCookBookDB.getInstance().searchDiary(searchContent);
     }
 
 }

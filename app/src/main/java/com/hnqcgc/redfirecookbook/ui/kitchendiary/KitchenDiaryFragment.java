@@ -2,25 +2,30 @@ package com.hnqcgc.redfirecookbook.ui.kitchendiary;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hnqcgc.redfirecookbook.R;
+import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
 import com.hnqcgc.redfirecookbook.ui.editdiary.EditDiaryActivity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public class KitchenDiaryFragment extends Fragment {
 
@@ -29,6 +34,11 @@ public class KitchenDiaryFragment extends Fragment {
     private KitchenDiaryViewModel viewModel;
 
     private RecyclerView diary;
+
+    private KitchenDiaryAdapter adapter;
+
+    private RelativeLayout noDataLayout;
+    private FloatingActionButton addDiaryBtn;
 
     @Nullable
     @Override
@@ -44,9 +54,36 @@ public class KitchenDiaryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (viewModel.allKitchenDiary.size() == 0)
             viewModel.loadAllKitchenDiary();
+        setKitchenDiaryRecycle();
+
+        setViewModel();
+    }
+
+    private void setViewModel() {
+        viewModel.allKitchenDiaryLiveData.observe(getViewLifecycleOwner(), this::diaryDataChanged);
+        viewModel.searchResultLiveData.observe(getViewLifecycleOwner(), this::diaryDataChanged);
+    }
+
+    private void diaryDataChanged(List<KitchenDiary> kitchenDiaries) {
+        viewModel.allKitchenDiary.clear();
+        viewModel.allKitchenDiary.addAll(kitchenDiaries);
+        if (viewModel.allKitchenDiary.size() == 0) {
+            noDataLayout.setVisibility(View.VISIBLE);
+            diary.setVisibility(View.GONE);
+            addDiaryBtn.setVisibility(View.GONE);
+        }else {
+            noDataLayout.setVisibility(View.GONE);
+            diary.setVisibility(View.VISIBLE);
+            addDiaryBtn.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setKitchenDiaryRecycle() {
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL) {
 
             private Method markItemDecorInsetsDirty = null;
+
             private boolean reflectError = false;
 
             @Override
@@ -90,7 +127,12 @@ public class KitchenDiaryFragment extends Fragment {
             }
         };
         diary.setLayoutManager(manager);
-        KitchenDiaryAdapter adapter = new KitchenDiaryAdapter(viewModel.allKitchenDiary);
+        adapter = new KitchenDiaryAdapter(viewModel.allKitchenDiary) {
+            @Override
+            void deleteDiary(long id) {
+                viewModel.deleteKitchenDiaryById(id);
+            }
+        };
         diary.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
@@ -106,21 +148,36 @@ public class KitchenDiaryFragment extends Fragment {
             }
         });
         diary.setAdapter(adapter);
-
-        viewModel.allKitchenDiaryLiveData.observe(getViewLifecycleOwner(), kitchenDiaries -> {
-            viewModel.allKitchenDiary.clear();
-            viewModel.allKitchenDiary.addAll(kitchenDiaries);
-            adapter.notifyDataSetChanged();
-        });
     }
 
     private void initView(View view) {
+        EditText searchDiaryEdit = view.findViewById(R.id.searchDiaryEdit);
+        noDataLayout = view.findViewById(R.id.noDataLayout);
         diary = view.findViewById(R.id.diary);
-
-        FloatingActionButton addDiaryBtn = view.findViewById(R.id.addDiaryBtn);
-
+        addDiaryBtn = view.findViewById(R.id.addDiaryBtn);
         addDiaryBtn.setOnClickListener(v -> EditDiaryActivity.startAddDiaryActivity(getContext()));
-    }
 
+        searchDiaryEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchContent = s.toString();
+                if (!searchContent.isEmpty()) {
+                    viewModel.searchDiary(searchContent);
+                }else {
+                    viewModel.loadAllKitchenDiary();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
 
 }

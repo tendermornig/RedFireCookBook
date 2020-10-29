@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 public class Collection {
 
     @PrimaryKey
-    @ColumnInfo(name = "recipeId")
     private long recipeId;
 
     private String title;

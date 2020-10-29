@@ -54,12 +54,20 @@ public class RedFireCookBookDB {
         kitchenDiaryDao.insertKitchenDiary(kitchenDiary);
     }
 
+    public void deleteKitchenDiaryById(long id) {
+        kitchenDiaryDao.deleteKitchenDiaryById(id);
+    }
+
     public void updateKitchenDiary(KitchenDiary kitchenDiary) {
         kitchenDiaryDao.updateKitchenDiary(kitchenDiary);
     }
 
     public LiveData<List<KitchenDiary>> loadAllKitchenDiary() {
         return kitchenDiaryDao.loadAllKitchenDiary();
+    }
+
+    public LiveData<List<KitchenDiary>> searchDiary(String searchContent) {
+        return kitchenDiaryDao.searchDiary("%"+searchContent+"%");
     }
 
 }
