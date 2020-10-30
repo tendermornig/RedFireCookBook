@@ -1,11 +1,14 @@
 package com.hnqcgc.redfirecookbook.logic.db;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Insert;
 
 import com.hnqcgc.redfirecookbook.logic.dao.CollectionDao;
 import com.hnqcgc.redfirecookbook.logic.dao.KitchenDiaryDao;
+import com.hnqcgc.redfirecookbook.logic.dao.RecipeInfoDao;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.RecipeInfo;
 
 import java.util.List;
 
@@ -17,7 +20,9 @@ public class RedFireCookBookDB {
 
     private static final CollectionDao collectionDao = AppDatabase.getInstance().collectionDao();
 
-    public static final KitchenDiaryDao kitchenDiaryDao = AppDatabase.getInstance().kitchenDiaryDao();
+    private static final KitchenDiaryDao kitchenDiaryDao = AppDatabase.getInstance().kitchenDiaryDao();
+
+    private static final RecipeInfoDao recipeInfoDao = AppDatabase.getInstance().recipeInfoDao();
 
     public static RedFireCookBookDB getInstance() {
         if (redFireCookBookDB == null) {
@@ -67,7 +72,19 @@ public class RedFireCookBookDB {
     }
 
     public LiveData<List<KitchenDiary>> searchDiary(String searchContent) {
-        return kitchenDiaryDao.searchDiary("%"+searchContent+"%");
+        return kitchenDiaryDao.searchDiary("%" + searchContent + "%");
+    }
+
+    public void insertAllRecipeInfo(List<RecipeInfo> recipeInfoList) {
+        recipeInfoDao.insertAllRecipeInfo(recipeInfoList);
+    }
+
+    public LiveData<List<Long>> searchLastRecipeInfoId() {
+        return recipeInfoDao.searchLastRecipeInfoId();
+    }
+
+    public LiveData<List<RecipeInfo>> searchRecipeInfo(String title) {
+        return recipeInfoDao.searchRecipeInfo("%" + title + "%");
     }
 
 }

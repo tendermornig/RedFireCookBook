@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hnqcgc.redfirecookbook.R;
-import com.hnqcgc.redfirecookbook.ui.MainActivity;
+import com.hnqcgc.redfirecookbook.ui.main.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

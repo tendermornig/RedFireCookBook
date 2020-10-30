@@ -38,7 +38,6 @@ public class KitchenDiaryFragment extends Fragment {
     private KitchenDiaryAdapter adapter;
 
     private RelativeLayout noDataLayout;
-    private FloatingActionButton addDiaryBtn;
 
     @Nullable
     @Override
@@ -70,11 +69,9 @@ public class KitchenDiaryFragment extends Fragment {
         if (viewModel.allKitchenDiary.size() == 0) {
             noDataLayout.setVisibility(View.VISIBLE);
             diary.setVisibility(View.GONE);
-            addDiaryBtn.setVisibility(View.GONE);
         }else {
             noDataLayout.setVisibility(View.GONE);
             diary.setVisibility(View.VISIBLE);
-            addDiaryBtn.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
         }
     }
@@ -154,7 +151,7 @@ public class KitchenDiaryFragment extends Fragment {
         EditText searchDiaryEdit = view.findViewById(R.id.searchDiaryEdit);
         noDataLayout = view.findViewById(R.id.noDataLayout);
         diary = view.findViewById(R.id.diary);
-        addDiaryBtn = view.findViewById(R.id.addDiaryBtn);
+        FloatingActionButton addDiaryBtn = view.findViewById(R.id.addDiaryBtn);
         addDiaryBtn.setOnClickListener(v -> EditDiaryActivity.startAddDiaryActivity(getContext()));
 
         searchDiaryEdit.addTextChangedListener(new TextWatcher() {

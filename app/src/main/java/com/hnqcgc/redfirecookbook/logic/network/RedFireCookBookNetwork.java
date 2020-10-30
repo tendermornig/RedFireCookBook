@@ -27,6 +27,10 @@ public class RedFireCookBookNetwork {
         return service.searchAllRecipe(10, offset);
     }
 
+    public Call<Recipe> loadAllRecipe(int limit) {
+        return service.searchAllRecipe(limit, 0);
+    }
+
     public Call<RecipeDetails> searchRecipe(long recipeId) {
         return service.searchRecipe(recipeId);
     }

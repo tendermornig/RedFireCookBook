@@ -1,5 +1,7 @@
 package com.hnqcgc.redfirecookbook.ui.allrecipe;
 
+import com.hnqcgc.redfirecookbook.ui.allrecipe.AllRecipeViewModel.RefreshType;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +24,14 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private final List<RecipeInfo> infoList;
 
-    private final Context context;
+    private final AllRecipeFragment fragment;
 
     private static final int TYPE_NORMAL_ITEM = 0;
 
     private static final int TYPE_BOTTOM_REFRESH_ITEM = 1;
 
-    public AllRecipeAdapter(Context context, List<RecipeInfo> infoList) {
-        this.context = context;
+    public AllRecipeAdapter(AllRecipeFragment fragment, List<RecipeInfo> infoList) {
+        this.fragment = fragment;
         this.infoList = infoList;
     }
 
@@ -83,7 +85,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (holder instanceof NormalViewHolder) {
             NormalViewHolder viewHolder = (NormalViewHolder) holder;
             RecipeInfo recipeInfo = infoList.get(holder.getAdapterPosition());
-            Glide.with(context)
+            Glide.with(fragment)
                     .load(recipeInfo.getCover())
                     .error(R.drawable.img_load_fail)
                     .into(viewHolder.recipeImage);
@@ -125,7 +127,7 @@ public class AllRecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return infoList.size() == 0 ? infoList.size():infoList.size() + 1;
+        return infoList.size() == 0 || fragment.viewModel.REFRESH_TYPE == RefreshType.SEARCH_RECIPE_INFO ? infoList.size():infoList.size() + 1;
     }
 
 }

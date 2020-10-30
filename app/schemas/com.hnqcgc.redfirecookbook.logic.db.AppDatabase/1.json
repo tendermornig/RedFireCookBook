@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "172ee3ff2a72a2b122200a7a6deb9233",
+    "identityHash": "2bc7835c394a4cae751529a62e4ac421",
     "entities": [
       {
         "tableName": "Collection",
@@ -91,12 +91,77 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "RecipeInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipeId` INTEGER NOT NULL, `title` TEXT, `message` TEXT, `gredient` TEXT, `cover` TEXT, `category` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipeId",
+            "columnName": "recipeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "message",
+            "columnName": "message",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gredient",
+            "columnName": "gredient",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cover",
+            "columnName": "cover",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_RecipeInfo_recipeId",
+            "unique": true,
+            "columnNames": [
+              "recipeId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_RecipeInfo_recipeId` ON `${TABLE_NAME}` (`recipeId`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '172ee3ff2a72a2b122200a7a6deb9233')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bc7835c394a4cae751529a62e4ac421')"
     ]
   }
 }

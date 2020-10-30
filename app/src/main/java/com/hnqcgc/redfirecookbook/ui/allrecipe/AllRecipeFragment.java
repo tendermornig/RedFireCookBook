@@ -1,10 +1,15 @@
 package com.hnqcgc.redfirecookbook.ui.allrecipe;
 
+import com.hnqcgc.redfirecookbook.ui.allrecipe.AllRecipeViewModel.RefreshType;
+
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,22 +31,13 @@ public class AllRecipeFragment extends Fragment {
 
     private static final String TAG = "AllRecipeFragment";
 
-    private AllRecipeViewModel viewModel;
+    public AllRecipeViewModel viewModel;
 
     private RecyclerView allRecipeRecycleView;
 
     private SwipeRefreshLayout swipeRefresh;
 
     private AllRecipeAdapter adapter;
-
-    public RefreshType REFRESH_TYPE;
-
-    private final int NO_POSITION = -1;
-
-    enum RefreshType{
-        TOP_REFRESH,
-        BOTTOM_REFRESH
-    }
 
     @Override
     public void onResume() {
@@ -60,11 +56,39 @@ public class AllRecipeFragment extends Fragment {
     }
 
     private void initView(View view) {
+        EditText searchRecipeEdit = view.findViewById(R.id.searchRecipeEdit);
         allRecipeRecycleView = view.findViewById(R.id.allRecipeRecycleView);
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
 
+        searchRecipeEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String name = s.toString();
+                swipeRefresh.setRefreshing(true);
+                if (!name.isEmpty()) {
+                    swipeRefresh.setEnabled(false);
+                    viewModel.REFRESH_TYPE = RefreshType.SEARCH_RECIPE_INFO;
+                    viewModel.searchRecipeInfo(name);
+                }else {
+                    viewModel.REFRESH_TYPE = RefreshType.TOP_REFRESH;
+                    viewModel.infoList.clear();
+                    viewModel.searchAllRecipe();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         swipeRefresh.setColorSchemeResources(R.color.grey_800_alpha_100);
-        swipeRefresh.setOnRefreshListener(this::refreshRecipe);
+        swipeRefresh.setOnRefreshListener(this::refreshTopRecipe);
     }
 
     @Override
@@ -72,7 +96,7 @@ public class AllRecipeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (viewModel.infoList.size() == 0){
-            refreshRecipe();
+            refreshTopRecipe();
             viewModel.searchAllRecipeId();
         }
 
@@ -87,17 +111,24 @@ public class AllRecipeFragment extends Fragment {
             if (recipe != null) {
                 if (recipe.getCount() > viewModel.getRecipeCount())
                     viewModel.saveRecipeCount(recipe.getCount());
-                if (REFRESH_TYPE == RefreshType.TOP_REFRESH) {
+                if (viewModel.REFRESH_TYPE == RefreshType.TOP_REFRESH) {
                     viewModel.infoList.addAll(0, recipe.getResults());
-                    swipeRefresh.setRefreshing(false);
                 }else
                     viewModel.infoList.addAll(recipe.getResults());
                 adapter.notifyDataSetChanged();
             }else {
                 LogUtil.getInstance().d(TAG, "recipe is null");
-                swipeRefresh.setRefreshing(false);
             }
+            swipeRefresh.setRefreshing(false);
         });
+
+        viewModel.searchRecipeInfoResult.observe(getViewLifecycleOwner(), recipeInfo -> {
+            swipeRefresh.setRefreshing(false);
+            viewModel.infoList.clear();
+            viewModel.infoList.addAll(recipeInfo);
+            adapter.notifyDataSetChanged();
+        });
+
         viewModel.allRecipeIdLiveData.observe(getViewLifecycleOwner(), longs -> {
             int index;
             List<Long> recipeIds = asRecipeIdList(viewModel.infoList);
@@ -117,7 +148,7 @@ public class AllRecipeFragment extends Fragment {
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL);
         allRecipeRecycleView.setLayoutManager(manager);
-        adapter = new AllRecipeAdapter(getContext(), viewModel.infoList);
+        adapter = new AllRecipeAdapter(this, viewModel.infoList);
         allRecipeRecycleView.setAdapter(adapter);
         allRecipeRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -137,31 +168,23 @@ public class AllRecipeFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (isBottomViewVisible()) {
-                    REFRESH_TYPE = RefreshType.BOTTOM_REFRESH;
-                    viewModel.searchAllRecipe(viewModel.length += 10);
+                if (viewModel.REFRESH_TYPE != RefreshType.SEARCH_RECIPE_INFO) {
+                    swipeRefresh.setEnabled(!recyclerView.canScrollVertically(-1));
+                    if (!recyclerView.canScrollVertically(1)) {
+                        viewModel.REFRESH_TYPE = RefreshType.BOTTOM_REFRESH;
+                        viewModel.length += 10;
+                        viewModel.searchAllRecipe();
+                    }
                 }
             }
         });
     }
 
-    private void refreshRecipe() {
-        REFRESH_TYPE = RefreshType.TOP_REFRESH;
+    private void refreshTopRecipe() {
+        viewModel.REFRESH_TYPE = RefreshType.TOP_REFRESH;
         viewModel.length = new Random().nextInt(viewModel.getRecipeCount());
-        viewModel.searchAllRecipe(viewModel.length);
+        viewModel.searchAllRecipe();
         swipeRefresh.setRefreshing(true);
-    }
-
-    private int getLastVisibleItemPosition() {
-        RecyclerView.LayoutManager manager = allRecipeRecycleView.getLayoutManager();
-        if (manager instanceof StaggeredGridLayoutManager)
-            return ((StaggeredGridLayoutManager) manager).findLastVisibleItemPositions(null)[0];
-        return NO_POSITION;
-    }
-
-    private boolean isBottomViewVisible() {
-        int lastVisibleItem = getLastVisibleItemPosition();
-        return lastVisibleItem != NO_POSITION && lastVisibleItem == adapter.getItemCount() - 1;
     }
 
     private List<Long> asRecipeIdList(List<RecipeInfo> recipeInfoList) {

@@ -16,7 +16,7 @@ public class LogUtil {
 
     private static final int  ERROR = 5;
 
-    private static final int level = VERBOSE;
+    private static final int level = ERROR;
 
     private LogUtil() {}
 

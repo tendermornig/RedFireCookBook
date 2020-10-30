@@ -1,6 +1,16 @@
 package com.hnqcgc.redfirecookbook.logic.model.recipe;
 
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
+@Entity(indices = {@Index(value = "recipeId", unique = true)})
 public class RecipeInfo {
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
 
     private long recipeId;
 
@@ -14,15 +24,15 @@ public class RecipeInfo {
 
     private String category;
 
+    @Ignore
     private boolean isCollection = false;
 
-    public RecipeInfo(int recipeId, String title, String message, String gredient, String cover, String category) {
-        this.recipeId = recipeId;
-        this.title = title;
-        this.message = message;
-        this.gredient = gredient;
-        this.cover = cover;
-        this.category = category;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getRecipeId() {

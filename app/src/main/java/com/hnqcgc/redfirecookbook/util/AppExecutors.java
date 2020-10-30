@@ -9,7 +9,7 @@ public class AppExecutors {
 
     public static Executor getMIOExecutor() {
         if (mIOExecutor == null) {
-            mIOExecutor = Executors.newSingleThreadExecutor();
+            mIOExecutor = Executors.newFixedThreadPool(2);
         }
         return mIOExecutor;
     }

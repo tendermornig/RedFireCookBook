@@ -12,6 +12,7 @@ import com.hnqcgc.redfirecookbook.logic.db.RedFireCookBookDB;
 import com.hnqcgc.redfirecookbook.logic.model.Collection;
 import com.hnqcgc.redfirecookbook.logic.model.KitchenDiary;
 import com.hnqcgc.redfirecookbook.logic.model.recipe.Recipe;
+import com.hnqcgc.redfirecookbook.logic.model.recipe.RecipeInfo;
 import com.hnqcgc.redfirecookbook.logic.model.recipedateils.RecipeDetails;
 import com.hnqcgc.redfirecookbook.logic.network.RedFireCookBookNetwork;
 import com.hnqcgc.redfirecookbook.util.AppExecutors;
@@ -44,7 +45,11 @@ public class Repository {
         call.enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(@NonNull Call<Recipe> call, @NonNull Response<Recipe> response) {
-                recipeLiveData.setValue(response.body());
+                if (response.body() != null) {
+                    recipeLiveData.setValue(response.body());
+                }else {
+                    LogUtil.getInstance().d(TAG, "response body is null");
+                }
             }
 
             @Override
@@ -74,6 +79,26 @@ public class Repository {
             }
         });
         return recipeDetailsLiveData;
+    }
+
+    public void loadAllRecipeInfo() {
+        Call<Recipe> call = RedFireCookBookNetwork.getInstance().loadAllRecipe(getRecipeCount());
+        call.enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(@NonNull Call<Recipe> call,@NonNull Response<Recipe> response) {
+                if (response.body() != null) {
+                    AppExecutors.getMIOExecutor().execute(
+                            () ->RedFireCookBookDB.getInstance().insertAllRecipeInfo(response.body().getResults()));
+                }else {
+                    LogUtil.getInstance().d(TAG, "response is null");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Recipe> call,@NonNull Throwable t) {
+                LogUtil.getInstance().d(TAG, t.getMessage());
+            }
+        });
     }
 
     public void saveRecipeCount(int count) {
@@ -126,6 +151,14 @@ public class Repository {
 
     public LiveData<List<KitchenDiary>> searchDiary(String searchContent) {
         return RedFireCookBookDB.getInstance().searchDiary(searchContent);
+    }
+
+    public LiveData<List<Long>> searchLastRecipeInfoId() {
+        return RedFireCookBookDB.getInstance().searchLastRecipeInfoId();
+    }
+
+    public LiveData<List<RecipeInfo>> searchRecipeInfo(String title) {
+        return RedFireCookBookDB.getInstance().searchRecipeInfo(title);
     }
 
 }
